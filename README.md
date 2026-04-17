@@ -9,7 +9,7 @@ A platform for KBTU students to offer and request services in educational goals 
 
 ##  Tech Stack
 * Backend: Django, Django REST Framework, SQLite DB
-* Frontend: Angular, TypeScript, SCSS
+* Frontend: Angular, TypeScript, CSS
 
 ## Run
 ### Backend
