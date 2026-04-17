@@ -13,7 +13,12 @@ A platform for KBTU students to offer and request services in educational goals 
 
 ## Run
 ### Backend
-python manage.py runserver
+1. cd backend
+2. python -m venv venv
+3. source venv/bin/activate  # venv\Scripts\activate для Windows
+4. pip install -r requirements.txt
+5. python manage.py migrate
+6. python manage.py runserver
 
 ### Frontend
 ng serve
