@@ -12,16 +12,11 @@ class LoginSerializer(serializers.Serializer):
     password = serializers.CharField(write_only=True)
 
 # 2. Для создания отклика/заказа
-class OrderCreateSerializer(serializers.Serializer):
-    id = serializers.IntegerField(read_only=True)
-    service_id = serializers.IntegerField()
-    message = serializers.CharField(max_length=255, required=False, allow_blank=True)
-    status = serializers.CharField(read_only=True)
-    
-    def create(self, validated_data):
-        # Поле customer (request.user) будет передано напрямую во View
-        return Order.objects.create(**validated_data)
-
+class OrderCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Order
+        fields = ['id', 'service', 'message', 'status']
+        read_only_fields = ['status'] # Статус нельзя менять просто так
 
 # ==========================================
 # 2 MODEL SERIALIZER

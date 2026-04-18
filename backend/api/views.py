@@ -6,7 +6,7 @@ from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 
-from .models import Category, ServicePost
+from .models import Category, ServicePost, Order
 from .serializers import (
     LoginSerializer, 
     OrderCreateSerializer,
@@ -15,42 +15,7 @@ from .serializers import (
 )
 
 # ==========================================
-# 1. FUNCTION-BASED VIEWS (FBV)
-# ==========================================
-
-# @api_view(['POST'])
-# @permission_classes([IsAuthenticated])
-# def create_order(request):
-#     """FBV для создания заказа с автоматической привязкой к request.user"""
-#     serializer = OrderCreateSerializer(data=request.data)
-#     if serializer.is_valid():
-#         # Привязываем заказчика (customer) к текущему юзеру
-#         serializer.save(customer=request.user)
-#         return Response(serializer.data, status=status.HTTP_201_CREATED)
-#     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-@api_view(['POST'])
-@permission_classes([AllowAny]) # Разрешаем доступ ВСЕМ без токена
-def create_order(request):
-    """FBV для создания заказа (ВРЕМЕННО ОТКРЫТО ДЛЯ ТЕСТОВ ФРОНТА)"""
-    serializer = OrderCreateSerializer(data=request.data)
-    
-    if serializer.is_valid():
-        # Если юзер передал токен (авторизован), берем его. 
-        # Если нет (фронтендер тестирует без токена) - берем первого юзера из БД.
-        if request.user.is_authenticated:
-            customer = request.user
-        else:
-            customer = User.objects.first() # Временная заглушка
-            
-        serializer.save(customer=customer)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-        
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-# ==========================================
-# 2. CLASS-BASED VIEWS (CBV)
+# CLASS-BASED VIEWS (CBV)
 # ==========================================
 
 class CategoryListView(generics.ListAPIView):
@@ -78,3 +43,40 @@ class ServicePostDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = ServicePost.objects.all()
     serializer_class = ServicePostSerializer
     permission_classes = [IsAuthenticated]
+
+# ==========================================
+# 4. ЗАКАЗЫ (Временно открыто для тестов фронта - AllowAny)
+# ==========================================
+
+class OrderListCreateView(generics.ListCreateAPIView):
+    """
+    Эндпоинты:
+    - GET /api/orders/  -> Получить список всех заказов
+    - POST /api/orders/ -> Создать новый заказ
+    """
+    queryset = Order.objects.all() 
+    serializer_class = OrderCreateSerializer
+    permission_classes = [AllowAny] # Временный доступ без токена
+
+    def perform_create(self, serializer):
+        """
+        Сохраняем тот самый "костыль" для фронтендера при POST-запросе:
+        Если есть токен - берем юзера. Если нет - вешаем заказ на админа.
+        """
+        if self.request.user.is_authenticated:
+            customer = self.request.user
+        else:
+            customer = User.objects.first() # Временная заглушка
+            
+        serializer.save(customer=customer)
+
+
+class OrderDetailView(generics.RetrieveUpdateDestroyAPIView):
+    """
+    Эндпоинты:
+    - GET /api/orders/<id>/ -> Посмотреть конкретный заказ
+    - PUT/PATCH /api/orders/<id>/ -> Обновить заказ (например, изменить status)
+    """
+    queryset = Order.objects.all()
+    serializer_class = OrderCreateSerializer
+    permission_classes = [AllowAny] # Временный доступ без токена
