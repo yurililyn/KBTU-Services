@@ -11,5 +11,9 @@ export const routes: Routes = [
     {
         path: "login",
         component: LoginComponent
+    },
+    {
+        path: "main",
+        component: MainComponent
     }
 ];
