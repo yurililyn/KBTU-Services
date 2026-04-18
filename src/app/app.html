@@ -1,0 +1,29 @@
+<nav class="navbar">
+    <h2>KBTU Services</h2>
+
+    <div class="menu">
+        <a href="#">Home</a>
+        <a href="#">Services</a>
+        <a href="#">About</a>
+    </div>
+</nav>
+<input placeholder="Search..." style="display:block; margin:20px auto; padding:10px; width:200px">
+<h1>KBTU Services</h1>
+
+<div *ngFor="let s of services">
+    <h3>{{s.title}}</h3>
+    <p>{{s.description}}</p>
+    <b>{{s.price}} ₸</b>
+</div>
+<div class="container">
+    <div class="card" *ngFor="let s of services">
+
+        <h3>{{s.title}}</h3>
+        <p>{{s.description}}</p>
+
+        <div class="price">{{s.price}} ₸</div>
+
+        <button>Order</button>
+
+    </div>
+</div>
