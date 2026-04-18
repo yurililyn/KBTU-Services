@@ -4,6 +4,7 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate
+from django.contrib.auth.models import User
 
 from .models import Category, ServicePost
 from .serializers import (
@@ -17,17 +18,36 @@ from .serializers import (
 # 1. FUNCTION-BASED VIEWS (FBV)
 # ==========================================
 
-@api_view(['POST'])
-@permission_classes([IsAuthenticated])
-def create_order(request):
-    """FBV для создания заказа с автоматической привязкой к request.user"""
-    serializer = OrderCreateSerializer(data=request.data)
-    if serializer.is_valid():
-        # Привязываем заказчика (customer) к текущему юзеру
-        serializer.save(customer=request.user)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+# @api_view(['POST'])
+# @permission_classes([IsAuthenticated])
+# def create_order(request):
+#     """FBV для создания заказа с автоматической привязкой к request.user"""
+#     serializer = OrderCreateSerializer(data=request.data)
+#     if serializer.is_valid():
+#         # Привязываем заказчика (customer) к текущему юзеру
+#         serializer.save(customer=request.user)
+#         return Response(serializer.data, status=status.HTTP_201_CREATED)
+#     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
+@api_view(['POST'])
+@permission_classes([AllowAny]) # Разрешаем доступ ВСЕМ без токена
+def create_order(request):
+    """FBV для создания заказа (ВРЕМЕННО ОТКРЫТО ДЛЯ ТЕСТОВ ФРОНТА)"""
+    serializer = OrderCreateSerializer(data=request.data)
+    
+    if serializer.is_valid():
+        # Если юзер передал токен (авторизован), берем его. 
+        # Если нет (фронтендер тестирует без токена) - берем первого юзера из БД.
+        if request.user.is_authenticated:
+            customer = request.user
+        else:
+            customer = User.objects.first() # Временная заглушка
+            
+        serializer.save(customer=customer)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        
+    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 # ==========================================
 # 2. CLASS-BASED VIEWS (CBV)
