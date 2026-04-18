@@ -18,22 +18,6 @@ from .serializers import (
 # ==========================================
 
 @api_view(['POST'])
-@permission_classes([AllowAny])
-def login_view(request):
-    """FBV для логина и получения токена"""
-    serializer = LoginSerializer(data=request.data)
-    if serializer.is_valid():
-        user = authenticate(
-            username=serializer.validated_data['username'],
-            password=serializer.validated_data['password']
-        )
-        if user:
-            token, _ = Token.objects.get_or_create(user=user)
-            return Response({'token': token.key}, status=status.HTTP_200_OK)
-        return Response({'error': 'Неверные учетные данные'}, status=status.HTTP_401_UNAUTHORIZED)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-@api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def create_order(request):
     """FBV для создания заказа с автоматической привязкой к request.user"""

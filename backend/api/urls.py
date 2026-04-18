@@ -3,7 +3,6 @@ from . import views
 
 urlpatterns = [
     # FBV
-    path('login/', views.login_view, name='api_login'),
     path('orders/', views.create_order, name='api_create_order'),
     
     # CBV

@@ -71,7 +71,7 @@
         "header": [
           {
             "key": "Authorization",
-            "value": "Token a40e712c8a234fedd20b5091d3f91dd4862bee0b",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc2NTExNTU3LCJpYXQiOjE3NzY1MTEyNTcsImp0aSI6IjBkYzkwNzRiZjNlYTRkZjE4OGQ5OGYwYWUwNzQ0ODYxIiwidXNlcl9pZCI6IjEifQ.McTg5VQ8PnsFrDgwUgc_TzHUHbpisyaS72A3Md7JzGo",
             "type": "text"
           }
         ],
