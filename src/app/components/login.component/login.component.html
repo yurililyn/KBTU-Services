@@ -1,0 +1,285 @@
+<!-- auth.component.html -->
+<div class="page">
+
+  <!-- Animated background -->
+  <canvas #canvas class="bg-canvas"></canvas>
+  <div class="orb orb-a"></div>
+  <div class="orb orb-b"></div>
+  <div class="orb orb-c"></div>
+  <div class="noise"></div>
+
+  <!-- Card -->
+  <div class="card" [class.expanded]="isRegisterMode">
+
+    <!-- Brand -->
+    <div class="brand">
+      <div class="brand-mark">
+        <svg viewBox="0 0 28 28" fill="none">
+          <path d="M14 2L26 8v12L14 26 2 20V8L14 2z"
+                stroke="url(#bp)" stroke-width="1.5" stroke-linejoin="round"/>
+          <path d="M14 8v12M8 11l6 3 6-3"
+                stroke="url(#bp)" stroke-width="1.5" stroke-linecap="round"/>
+          <defs>
+            <linearGradient id="bp" x1="2" y1="2" x2="26" y2="26">
+              <stop offset="0%" stop-color="#a78bfa"/>
+              <stop offset="100%" stop-color="#22d3ee"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <span class="brand-label">Nexus</span>
+    </div>
+
+    <!-- Heading -->
+    <div class="heading">
+      <h1>{{ isRegisterMode ? 'Создать аккаунт' : 'Вход в систему' }}</h1>
+      <p>{{ isRegisterMode ? 'Заполните все поля для регистрации' : 'Введите данные для входа' }}</p>
+    </div>
+
+    <!-- ─── SUCCESS ─── -->
+    <div class="success" *ngIf="submitDone">
+      <div class="success-ring">
+        <svg viewBox="0 0 56 56" fill="none">
+          <circle cx="28" cy="28" r="26" stroke="url(#sg)" stroke-width="2"/>
+          <path d="M17 28l8 8 14-16"
+                stroke="url(#sg)" stroke-width="2.5"
+                stroke-linecap="round" stroke-linejoin="round"/>
+          <defs>
+            <linearGradient id="sg" x1="0" y1="0" x2="56" y2="56">
+              <stop offset="0%" stop-color="#a78bfa"/>
+              <stop offset="100%" stop-color="#34d399"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <span>{{ isRegisterMode ? 'Аккаунт создан!' : 'Добро пожаловать!' }}</span>
+    </div>
+
+    <!-- ═══════════════════════════════════════════════
+         ФОРМА ВХОДА  (loginForm)
+         Рендерится только когда !isRegisterMode
+    ═══════════════════════════════════════════════ -->
+    <form *ngIf="!submitDone && !isRegisterMode"
+          [formGroup]="loginForm"
+          (ngSubmit)="onSubmit()"
+          novalidate
+          class="auth-form">
+
+      <div class="field" [class.has-error]="lInvalid('email')">
+        <label>Email</label>
+        <div class="input-box">
+          <ng-container *ngTemplateOutlet="iconMail"></ng-container>
+          <input type="email" formControlName="email"
+                 placeholder="you@example.com" autocomplete="off"/>
+        </div>
+        <div class="err-msg" *ngIf="lInvalid('email')">{{ lError('email') }}</div>
+      </div>
+
+      <div class="field" [class.has-error]="lInvalid('password')">
+        <label>Пароль</label>
+        <div class="input-box">
+          <ng-container *ngTemplateOutlet="iconLock"></ng-container>
+          <input [type]="showPass['password'] ? 'text' : 'password'"
+                 formControlName="password"
+                 placeholder="Минимум 8 символов"
+                 autocomplete="current-password"/>
+          <button type="button" class="eye" (click)="togglePass('password')">
+            <ng-container *ngIf="!showPass['password']; else lEyeOff">
+              <ng-container *ngTemplateOutlet="iconEyeOn"></ng-container>
+            </ng-container>
+            <ng-template #lEyeOff>
+              <ng-container *ngTemplateOutlet="iconEyeOff"></ng-container>
+            </ng-template>
+          </button>
+        </div>
+        <div class="err-msg" *ngIf="lInvalid('password')">{{ lError('password') }}</div>
+      </div>
+
+      <button type="submit" class="submit" [disabled]="isSubmitting">
+        <span *ngIf="!isSubmitting">Войти</span>
+        <span class="spinner" *ngIf="isSubmitting">
+          <svg viewBox="0 0 22 22" fill="none">
+            <circle cx="11" cy="11" r="9" stroke="white" stroke-width="2.5"
+                    stroke-dasharray="50" stroke-dashoffset="12"/>
+          </svg>
+        </span>
+      </button>
+
+      <div class="switch">
+        <span>Ещё нет аккаунта?</span>
+        <button type="button" (click)="toggleMode()">Зарегистрироваться</button>
+      </div>
+
+    </form>
+
+    <!-- ═══════════════════════════════════════════════
+         ФОРМА РЕГИСТРАЦИИ  (registerForm)
+         Рендерится только когда isRegisterMode
+    ═══════════════════════════════════════════════ -->
+    <form *ngIf="!submitDone && isRegisterMode"
+          [formGroup]="registerForm"
+          (ngSubmit)="onSubmit()"
+          novalidate
+          class="auth-form reg-form">
+
+      <!-- Email -->
+      <div class="field" [class.has-error]="rInvalid('email')">
+        <label>Email</label>
+        <div class="input-box">
+          <ng-container *ngTemplateOutlet="iconMail"></ng-container>
+          <input type="email" formControlName="email"
+                 placeholder="you@example.com" autocomplete="off"/>
+        </div>
+        <div class="err-msg" *ngIf="rInvalid('email')">{{ rError('email') }}</div>
+      </div>
+
+      <!-- Password -->
+      <div class="field" [class.has-error]="rInvalid('password')">
+        <label>Пароль</label>
+        <div class="input-box">
+          <ng-container *ngTemplateOutlet="iconLock"></ng-container>
+          <input [type]="showPass['rpassword'] ? 'text' : 'password'"
+                 formControlName="password"
+                 placeholder="Минимум 8 символов"
+                 autocomplete="new-password"/>
+          <button type="button" class="eye" (click)="togglePass('rpassword')">
+            <ng-container *ngIf="!showPass['rpassword']; else rEyeOff">
+              <ng-container *ngTemplateOutlet="iconEyeOn"></ng-container>
+            </ng-container>
+            <ng-template #rEyeOff>
+              <ng-container *ngTemplateOutlet="iconEyeOff"></ng-container>
+            </ng-template>
+          </button>
+        </div>
+        <div class="strength" *ngIf="registerForm.get('password')?.value">
+          <div class="strength-track">
+            <div class="strength-fill" [ngClass]="passwordStrength()!"></div>
+          </div>
+          <span class="strength-label" [ngClass]="passwordStrength()!">
+            {{ passwordStrength() === 'weak' ? 'Слабый'
+             : passwordStrength() === 'medium' ? 'Средний' : 'Надёжный' }}
+          </span>
+        </div>
+        <div class="err-msg" *ngIf="rInvalid('password')">{{ rError('password') }}</div>
+      </div>
+
+      <!-- Confirm 1 -->
+      <div class="field" [class.has-error]="rInvalid('confirm1') || rFormErr('mismatch1')">
+        <label>Повторите пароль</label>
+        <div class="input-box">
+          <ng-container *ngTemplateOutlet="iconShield"></ng-container>
+          <input [type]="showPass['confirm1'] ? 'text' : 'password'"
+                 formControlName="confirm1"
+                 placeholder="Ещё раз пароль"
+                 autocomplete="new-password"/>
+          <button type="button" class="eye" (click)="togglePass('confirm1')">
+            <ng-container *ngIf="!showPass['confirm1']; else c1Off">
+              <ng-container *ngTemplateOutlet="iconEyeOn"></ng-container>
+            </ng-container>
+            <ng-template #c1Off>
+              <ng-container *ngTemplateOutlet="iconEyeOff"></ng-container>
+            </ng-template>
+          </button>
+        </div>
+        <div class="err-msg" *ngIf="rFormErr('mismatch1')">Пароли не совпадают</div>
+        <div class="err-msg" *ngIf="rInvalid('confirm1') && !rFormErr('mismatch1')">{{ rError('confirm1') }}</div>
+      </div>
+
+      <div class="divider"><span>Личные данные</span></div>
+
+      <!-- Name row -->
+      <div class="row-2">
+        <div class="field" [class.has-error]="rInvalid('firstName')">
+          <label>Имя</label>
+          <div class="input-box">
+            <ng-container *ngTemplateOutlet="iconUser"></ng-container>
+            <input type="text" formControlName="firstName" placeholder="Иван"/>
+          </div>
+          <div class="err-msg" *ngIf="rInvalid('firstName')">{{ rError('firstName') }}</div>
+        </div>
+        <div class="field" [class.has-error]="rInvalid('lastName')">
+          <label>Фамилия</label>
+          <div class="input-box">
+            <ng-container *ngTemplateOutlet="iconUser"></ng-container>
+            <input type="text" formControlName="lastName" placeholder="Иванов"/>
+          </div>
+          <div class="err-msg" *ngIf="rInvalid('lastName')">{{ rError('lastName') }}</div>
+        </div>
+      </div>
+
+      <!-- Phone -->
+      <div class="field" [class.has-error]="rInvalid('phone')">
+        <label>Телефон <em class="opt">(необязательно)</em></label>
+        <div class="input-box">
+          <ng-container *ngTemplateOutlet="iconPhone"></ng-container>
+          <input type="tel" formControlName="phone" placeholder="+7 (___) ___-__-__"/>
+        </div>
+        <div class="err-msg" *ngIf="rInvalid('phone')">{{ rError('phone') }}</div>
+      </div>
+
+      <!-- Submit -->
+      <button type="submit" class="submit" [disabled]="isSubmitting">
+        <span *ngIf="!isSubmitting">Зарегистрироваться</span>
+        <span class="spinner" *ngIf="isSubmitting">
+          <svg viewBox="0 0 22 22" fill="none">
+            <circle cx="11" cy="11" r="9" stroke="white" stroke-width="2.5"
+                    stroke-dasharray="50" stroke-dashoffset="12"/>
+          </svg>
+        </span>
+      </button>
+
+      <div class="switch">
+        <span>Уже есть аккаунт?</span>
+        <button type="button" (click)="toggleMode()">Войти</button>
+      </div>
+
+    </form>
+
+  </div><!-- /card -->
+</div>
+
+<!-- ─── SVG icon templates ─── -->
+<ng-template #iconMail>
+  <svg class="ico" viewBox="0 0 18 18" fill="none">
+    <rect x="1" y="4" width="16" height="11" rx="2" stroke="currentColor" stroke-width="1.4"/>
+    <path d="M1 6l8 5 8-5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+  </svg>
+</ng-template>
+<ng-template #iconLock>
+  <svg class="ico" viewBox="0 0 18 18" fill="none">
+    <rect x="3" y="8" width="12" height="9" rx="2" stroke="currentColor" stroke-width="1.4"/>
+    <path d="M6 8V5.5a3 3 0 016 0V8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+    <circle cx="9" cy="12.5" r="1.2" fill="currentColor"/>
+  </svg>
+</ng-template>
+<ng-template #iconShield>
+  <svg class="ico" viewBox="0 0 18 18" fill="none">
+    <path d="M9 2l6 2.5v4.5C15 13 12 16 9 17c-3-1-6-4-6-8V4.5L9 2z"
+          stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+    <path d="M6 9l2 2 4-4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+  </svg>
+</ng-template>
+<ng-template #iconUser>
+  <svg class="ico" viewBox="0 0 18 18" fill="none">
+    <circle cx="9" cy="6" r="3" stroke="currentColor" stroke-width="1.4"/>
+    <path d="M2 16c0-3 3.1-5.5 7-5.5S16 13 16 16" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+  </svg>
+</ng-template>
+<ng-template #iconPhone>
+  <svg class="ico" viewBox="0 0 18 18" fill="none">
+    <path d="M3 2h3l1.5 4-2 1.2A9.9 9.9 0 0012 12l1.2-2L17 11.5V15a2 2 0 01-2 2A14 14 0 013 2z"
+          stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>
+</ng-template>
+<ng-template #iconEyeOn>
+  <svg viewBox="0 0 18 18" fill="none">
+    <ellipse cx="9" cy="9" rx="7" ry="5" stroke="currentColor" stroke-width="1.4"/>
+    <circle cx="9" cy="9" r="2" stroke="currentColor" stroke-width="1.4"/>
+  </svg>
+</ng-template>
+<ng-template #iconEyeOff>
+  <svg viewBox="0 0 18 18" fill="none">
+    <path d="M2 2l14 14M7.5 7.7A2 2 0 0010.3 10.5M4 5.3C2.6 6.4 2 9 2 9s2.5 5 7 5c1.2 0 2.3-.3 3.2-.8M6 4.3C7 3.8 8 3.5 9 3.5c4.5 0 7 5.5 7 5.5s-.6 1.4-1.7 2.6"
+          stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+  </svg>
+</ng-template>
