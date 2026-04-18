@@ -14,7 +14,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\r\n    \"username\": \"admin\",\r\n    \"password\": \"mimimax1423\"\r\n}",
+          "raw": "{\r\n    \"username\": \"new_student\",\r\n    \"password\": \"securepassword123\"\r\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -71,7 +71,7 @@
         "header": [
           {
             "key": "Authorization",
-            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc2NTExNTU3LCJpYXQiOjE3NzY1MTEyNTcsImp0aSI6IjBkYzkwNzRiZjNlYTRkZjE4OGQ5OGYwYWUwNzQ0ODYxIiwidXNlcl9pZCI6IjEifQ.McTg5VQ8PnsFrDgwUgc_TzHUHbpisyaS72A3Md7JzGo",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc2NTI3OTU4LCJpYXQiOjE3NzY1Mjc2NTgsImp0aSI6ImI5ZWMxNzk3Y2QzNDRmMWE5MmIyZjEwNDVlZTg3NWUwIiwidXNlcl9pZCI6IjEifQ.0jxaL6p8xXNXGDx75kb8wtk-I4-Lv73O5mBMNuV3ZYc",
             "type": "text"
           }
         ],
@@ -121,6 +121,321 @@
           "path": [
             "api",
             "services",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "5. Create Order",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"service\": 2,\r\n    \"message\": \"Привет! Хочу заказать твою помощь по лабам.\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/orders/",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "orders",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "6. Update Service",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc2NTI5Nzc2LCJpYXQiOjE3NzY1Mjk0NzYsImp0aSI6ImU1YjY4MDJhYzU2OTRiZWY5ZTI0YmNmNzYxMWY5ZDBlIiwidXNlcl9pZCI6IjEifQ.sua_URTRjNBbuqRZzw5usXQ7sVn8-LgPgh10R68gQ5U",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc2NTI4MzcxLCJpYXQiOjE3NzY1MjgwNzEsImp0aSI6IjhmNTNkNDExYWY4OTRlYTQ5YzY3NTcyN2ZiMzlhYmE4IiwidXNlcl9pZCI6IjEifQ.ZujFHroPiInGi9O5F-LM1qljZnu4az9uZupWrdag7c0",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"title\": \"Тестирую создание услуги\",\r\n    \"description\": \"Всё работает, описание добавлено!\",\r\n    \"price\": \"5000.00\",\r\n    \"category\": 3\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/services/3/",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "services",
+            "3",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "7. Show Service Details",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc2NTI5Nzc2LCJpYXQiOjE3NzY1Mjk0NzYsImp0aSI6ImU1YjY4MDJhYzU2OTRiZWY5ZTI0YmNmNzYxMWY5ZDBlIiwidXNlcl9pZCI6IjEifQ.sua_URTRjNBbuqRZzw5usXQ7sVn8-LgPgh10R68gQ5U",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc2NTI4NzM5LCJpYXQiOjE3NzY1Mjg0MzksImp0aSI6IjlkZTBhYjBhZjczYjQxMjZhNTM5MWU2NTg3Zjc2ZjZhIiwidXNlcl9pZCI6IjEifQ.7u2JS2Zatpoj0tay7hMi1QDHyRONpQFPu8xkLw2LgsU",
+            "type": "text"
+          }
+        ],
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/services/2/",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "services",
+            "2",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "8. Delete Service",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc2NTI5Nzc2LCJpYXQiOjE3NzY1Mjk0NzYsImp0aSI6ImU1YjY4MDJhYzU2OTRiZWY5ZTI0YmNmNzYxMWY5ZDBlIiwidXNlcl9pZCI6IjEifQ.sua_URTRjNBbuqRZzw5usXQ7sVn8-LgPgh10R68gQ5U",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "DELETE",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/services/1/",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "services",
+            "1",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "9. Get Orders",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/orders/",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "orders",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "10. Get Order",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"service_id\": 1,\r\n    \"message\": \"Привет! Хочу заказать твою помощь по лабам.\"\r\n} "
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/orders/3",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "orders",
+            "3"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "11. Update Order",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"service\": 3,\r\n    \"message\": \"Ой, я передумал, отмените заказ\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/orders/3/",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "orders",
+            "3",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "12. Delete Order",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/orders/5/",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "orders",
+            "5",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "13. Register User",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"username\": \"new_student\",\r\n    \"email\": \"student@kbtu.kz\",\r\n    \"password\": \"securepassword123\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/register/",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "register",
             ""
           ]
         }

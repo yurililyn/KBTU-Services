@@ -3,6 +3,27 @@ from django.contrib.auth.models import User
 from .models import Category, ServicePost, Order
 
 # ==========================================
+# РЕГИСТРАЦИЯ
+# ==========================================
+class RegisterSerializer(serializers.ModelSerializer):
+    # Указываем, что пароль можно только писать (он не будет возвращаться в ответах GET)
+    password = serializers.CharField(write_only=True, min_length=8)
+
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'email', 'password'] # email по желанию
+
+    def create(self, validated_data):
+        # САМОЕ ВАЖНОЕ: Используем create_user, а не просто create!
+        # Только create_user умеет правильно шифровать пароль.
+        user = User.objects.create_user(
+            username=validated_data['username'],
+            email=validated_data.get('email', ''),
+            password=validated_data['password']
+        )
+        return user
+
+# ==========================================
 # 2 ОБЫЧНЫХ SERIALIZER (Plain Serializers)
 # ==========================================
 

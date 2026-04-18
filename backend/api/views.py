@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
+from .serializers import RegisterSerializer
 
 from .models import Category, ServicePost, Order
 from .serializers import (
@@ -13,6 +14,19 @@ from .serializers import (
     CategorySerializer, 
     ServicePostSerializer
 )
+
+# ==========================================
+# 0. РЕГИСТРАЦИЯ ПОЛЬЗОВАТЕЛЯ
+# ==========================================
+class RegisterView(generics.CreateAPIView):
+    """
+    Эндпоинт: POST /api/register/
+    Функционал: Создание нового пользователя
+    Доступ: Разрешен всем (даже без токена)
+    """
+    queryset = User.objects.all()
+    serializer_class = RegisterSerializer
+    permission_classes = [AllowAny] # Разрешаем регистрацию кому угодно
 
 # ==========================================
 # CLASS-BASED VIEWS (CBV)
