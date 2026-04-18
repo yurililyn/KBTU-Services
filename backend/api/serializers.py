@@ -8,10 +8,12 @@ from .models import Category, ServicePost, Order
 class RegisterSerializer(serializers.ModelSerializer):
     # Указываем, что пароль можно только писать (он не будет возвращаться в ответах GET)
     password = serializers.CharField(write_only=True, min_length=8)
+    first_name = serializers.CharField(required=True, max_length=150)
+    last_name = serializers.CharField(required=True, max_length=150)
 
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'password'] # email по желанию
+        fields = ['id', 'username', 'first_name', 'last_name', 'email', 'password'] # email по желанию
 
     def create(self, validated_data):
         # САМОЕ ВАЖНОЕ: Используем create_user, а не просто create!
@@ -19,7 +21,9 @@ class RegisterSerializer(serializers.ModelSerializer):
         user = User.objects.create_user(
             username=validated_data['username'],
             email=validated_data.get('email', ''),
-            password=validated_data['password']
+            password=validated_data['password'],
+            first_name=validated_data['first_name'],
+            last_name=validated_data['last_name']
         )
         return user
 

@@ -416,7 +416,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\r\n    \"username\": \"new_student\",\r\n    \"email\": \"student@kbtu.kz\",\r\n    \"password\": \"securepassword123\"\r\n}",
+          "raw": "{\r\n    \"username\": \"arman_kz\",\r\n    \"first_name\": \"Арман\",\r\n    \"last_name\": \"Оспанов\",\r\n    \"email\": \"arman@kbtu.kz\",\r\n    \"password\": \"superpassword123\"\r\n}",
           "options": {
             "raw": {
               "language": "json"

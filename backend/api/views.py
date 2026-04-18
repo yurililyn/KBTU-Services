@@ -16,7 +16,7 @@ from .serializers import (
 )
 
 # ==========================================
-# 0. РЕГИСТРАЦИЯ ПОЛЬЗОВАТЕЛЯ
+# РЕГИСТРАЦИЯ ПОЛЬЗОВАТЕЛЯ
 # ==========================================
 class RegisterView(generics.CreateAPIView):
     """
@@ -59,7 +59,7 @@ class ServicePostDetailView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAuthenticated]
 
 # ==========================================
-# 4. ЗАКАЗЫ (Временно открыто для тестов фронта - AllowAny)
+# ЗАКАЗЫ (Временно открыто для тестов фронта - AllowAny)
 # ==========================================
 
 class OrderListCreateView(generics.ListCreateAPIView):
