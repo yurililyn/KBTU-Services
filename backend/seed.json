@@ -1,0 +1,101 @@
+[
+  {
+    "model": "auth.user",
+    "pk": 1,
+    "fields": {
+      "password": "pbkdf2_sha256$600000$l3H9Njs8vX!$e4650538f627727c98031e84762c902c34a2e8c2",
+      "is_superuser": true,
+      "username": "admin",
+      "first_name": "Главный",
+      "last_name": "Админ",
+      "is_staff": true,
+      "is_active": true,
+      "date_joined": "2023-11-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 2,
+    "fields": {
+      "password": "pbkdf2_sha256$600000$l3H9Njs8vX!$e4650538f627727c98031e84762c902c34a2e8c2",
+      "is_superuser": false,
+      "username": "arman_student",
+      "first_name": "Arman",
+      "last_name": "S.",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2023-11-01T10:05:00Z"
+    }
+  },
+  {
+    "model": "auth.user",
+    "pk": 3,
+    "fields": {
+      "password": "pbkdf2_sha256$600000$l3H9Njs8vX!$e4650538f627727c98031e84762c902c34a2e8c2",
+      "is_superuser": false,
+      "username": "dina_design",
+      "first_name": "Dina",
+      "last_name": "K.",
+      "is_staff": false,
+      "is_active": true,
+      "date_joined": "2023-11-01T10:10:00Z"
+    }
+  },
+  {
+    "model": "api.category",
+    "pk": 1,
+    "fields": {
+      "name": "IT & Программирование"
+    }
+  },
+  {
+    "model": "api.category",
+    "pk": 2,
+    "fields": {
+      "name": "Дизайн & Фото"
+    }
+  },
+  {
+    "model": "api.category",
+    "pk": 3,
+    "fields": {
+      "name": "Репетиторство"
+    }
+  },
+  {
+    "model": "api.servicepost",
+    "pk": 1,
+    "fields": {
+      "title": "Помогу с лабами по Python / Django",
+      "description": "Объясню сложные темы, помогу найти ошибки в коде. Опыт работы с DRF.",
+      "price": "3000.00",
+      "category": 1,
+      "author": 2,
+      "created_at": "2023-11-01T11:00:00Z"
+    }
+  },
+  {
+    "model": "api.servicepost",
+    "pk": 2,
+    "fields": {
+      "title": "Сделаю крутую презентацию в Figma",
+      "description": "Оформлю ваши слайды для защиты проекта стильно и современно.",
+      "price": "5000.00",
+      "category": 2,
+      "author": 3,
+      "created_at": "2023-11-01T11:30:00Z"
+    }
+  },
+  {
+    "model": "api.servicepost",
+    "pk": 3,
+    "fields": {
+      "title": "Подтяну по Высшей Математике",
+      "description": "Интегралы, пределы, матрицы. Готовлю к мидтермам.",
+      "price": "4000.00",
+      "category": 3,
+      "author": 2,
+      "created_at": "2023-11-01T12:00:00Z"
+    }
+  }
+]
