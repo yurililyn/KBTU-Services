@@ -105,7 +105,7 @@ export class RegisterComponent implements OnInit {
       firstName: formValue.firstName,
       lastName: formValue.lastName,
       username: formValue.username,
-      email: formValue.email || null,
+      email: formValue.email || "",
       password: formValue.password
     };
 
