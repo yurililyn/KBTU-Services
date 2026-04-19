@@ -1,58 +1,60 @@
-<!-- плашка ошибки авторизации (самый верх формы) -->
-<div *ngIf="!isAuth" class="auth-error-banner" @fadeIn>
-  <h1>Invalid user or password</h1>
-</div>
-
-<form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
-  <!-- поле user -->
-  <div class="form-field">
-    <label for="username">Имя пользователя</label>
-    <input
-      id="username"
-      type="text"
-      formControlName="username"
-      placeholder="Введите логин"
-      autocomplete="username"
-      [class.invalid]="username.invalid && (username.dirty || username.touched)"
-    />
-    <!-- сообщение валидации появляется сверху поля -->
-    <div *ngIf="username.invalid && (username.dirty || username.touched)" class="validation-error">
-      <ng-container *ngIf="username.errors?.['required']">Поле обязательно для заполнения</ng-container>
-      <ng-container *ngIf="username.errors?.['minlength']">Минимум 3 символа</ng-container>
-      <ng-container *ngIf="username.errors?.['pattern']">Только латиница, цифры и _</ng-container>
-    </div>
+<div id="container">
+    <!-- плашка ошибки авторизации (самый верх формы) -->
+  <div *ngIf="!isAuth" class="auth-error-banner" @fadeIn>
+    <h1>Invalid user or password</h1>
   </div>
 
-  <!-- поле password -->
-  <div class="form-field">
-    <label for="password">Пароль</label>
-    <input
-      id="password"
-      type="password"
-      formControlName="password"
-      placeholder="Введите пароль"
-      autocomplete="current-password"
-      [class.invalid]="password.invalid && (password.dirty || password.touched)"
-    />
-    <div *ngIf="password.invalid && (password.dirty || password.touched)" class="validation-error">
-      <ng-container *ngIf="password.errors?.['required']">Пароль обязателен</ng-container>
-      <ng-container *ngIf="password.errors?.['minlength']">Не менее 6 символов</ng-container>
-      <ng-container *ngIf="password.errors?.['pattern']">Пароль должен содержать буквы и цифры</ng-container>
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+    <!-- поле user -->
+    <div class="form-field">
+      <label for="username">Имя пользователя</label>
+      <input
+        id="username"
+        type="text"
+        formControlName="username"
+        placeholder="Введите логин"
+        autocomplete="username"
+        [class.invalid]="username.invalid && (username.dirty || username.touched)"
+      />
+      <!-- сообщение валидации появляется сверху поля -->
+      <div *ngIf="username.invalid && (username.dirty || username.touched)" class="validation-error">
+        <ng-container *ngIf="username.errors?.['required']">Поле обязательно для заполнения</ng-container>
+        <ng-container *ngIf="username.errors?.['minlength']">Минимум 3 символа</ng-container>
+        <ng-container *ngIf="username.errors?.['pattern']">Только латиница, цифры и _</ng-container>
+      </div>
     </div>
-  </div>
 
-  <!-- кнопка активна только при валидной форме -->
-  <button
-    type="submit"
-    class="login-button"
-    [disabled]="loginForm.invalid || isLoading"
-    [class.loading]="isLoading"
-  >
-    <span *ngIf="!isLoading">Войти</span>
-    <span *ngIf="isLoading" class="spinner"></span>
-  </button>
-</form>
-<div class="register-link">
-    <span>Нет аккаунта?</span>
-    <a routerLink="/registration">Зарегистрироваться</a>
+    <!-- поле password -->
+    <div class="form-field">
+      <label for="password">Пароль</label>
+      <input
+        id="password"
+        type="password"
+        formControlName="password"
+        placeholder="Введите пароль"
+        autocomplete="current-password"
+        [class.invalid]="password.invalid && (password.dirty || password.touched)"
+      />
+      <div *ngIf="password.invalid && (password.dirty || password.touched)" class="validation-error">
+        <ng-container *ngIf="password.errors?.['required']">Пароль обязателен</ng-container>
+        <ng-container *ngIf="password.errors?.['minlength']">Не менее 6 символов</ng-container>
+        <ng-container *ngIf="password.errors?.['pattern']">Пароль должен содержать буквы и цифры</ng-container>
+      </div>
+    </div>
+
+    <!-- кнопка активна только при валидной форме -->
+    <button
+      type="submit"
+      class="login-button"
+      [disabled]="loginForm.invalid || isLoading"
+      [class.loading]="isLoading"
+    >
+      <span *ngIf="!isLoading">Войти</span>
+      <span *ngIf="isLoading" class="spinner"></span>
+    </button>
+  </form>
+  <div class="register-link">
+      <span>Нет аккаунта?</span>
+      <a routerLink="/registration">Зарегистрироваться</a>
+  </div>
 </div>

@@ -12,4 +12,22 @@ export class ServicepostService {
     getAll() : Observable<ServicePost[]>{
       return this.http.get<ServicePost[]>(`${this.apiUrl}/`);
     }
+
+
+    getByAuthor(id : number): Observable<ServicePost[]>{
+      return this.http.get<ServicePost[]>(`${this.apiUrl}/?categoyr=${id}`)
+    }
+
+
+    delete(id: number) {
+      return this.http.delete(`${this.apiUrl}/${id}/`);
+    }
+    update(service: ServicePost) {
+    return this.http.patch<ServicePost>(`${this.apiUrl}/${service.id}/`, {
+      title: service.title,
+      description: service.description,
+      price: service.price,
+      category: service.category
+    });
+  }
 }

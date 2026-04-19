@@ -223,18 +223,14 @@ body {
 /* ===== TAB CONTENT ===== */
 
 .tab-content {
+    display:flex;
+    flex-direction: column;
+    gap:16px;
     background: white;
     border-radius: 24px;
     padding: 30px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 }
-
-#requests-tab,
-#orders-tab,
-#settings-tab {
-    display: none;
-}
-
 
 /* ===== CREATE BUTTON ===== */
 

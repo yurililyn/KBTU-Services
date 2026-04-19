@@ -1,10 +1,16 @@
 <header class="header">
-    <div class="logo">🎓 KBTU Services</div>
-    <nav class="nav">
-        <a>Home</a>
-        <a>Services</a>
-        <a>Requests</a>
-        <a>Profile</a>
-        <a class="login">Login</a>
-    </nav>
+  <a style="text-decoration: none;" routerLink="/main"><div class="logo">🎓 KBTU Services</div></a>
+  <nav class="nav">
+
+    <ng-container *ngIf="isAuthPage; else mainNav">
+      <a routerLink="/login" class="login">Sign In</a>
+      <a routerLink="/registration" class="signup">Sign Up</a>
+    </ng-container>
+
+    <ng-template #mainNav>
+        <a routerLink="/main" routerLinkActive="active">Home</a>
+        <a routerLink="/profile" routerLinkActive="active">Profile</a>
+        <a class="logout" (click)="logout()">Logout</a>
+    </ng-template>
+  </nav>
 </header>

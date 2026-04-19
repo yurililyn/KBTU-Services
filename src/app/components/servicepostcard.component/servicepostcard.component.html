@@ -1,37 +1,43 @@
 <div class="card">
-
-    <div class="image"></div>
-
-    <div class="content">
-        <h3>Essay Writing Help</h3>
-
-        <p class="author">by Yerlan</p>
-
-        <div class="rating">
-            ⭐ 4.8 <span>(120)</span>
-        </div>
-
-        <div class="bottom">
-            <div class="price">$10</div>
-            <button>Order</button>
-        </div>
-
-    </div>
-
-</div>
-<div class="card">
-
-    <div class="category math">
-        ∑ Math
-    </div>
-
-    <h3>Linear Algebra Help</h3>
-
-    <p class="author">by Student</p>
-
+  <div class="content">
+    <div class="category">{{ service().category_name }}</div>
+    <h3>{{ service().title }}</h3>
+    <p class="description">{{ service().description }}</p>
     <div class="bottom">
-        <span class="price">$10</span>
-        <button>Order</button>
+      <span class="price">{{ service().price }}$</span>
+      <div class="actions">
+        <span class="rating">⭐ {{ service().average_rating }}</span>
+        <button class="edit-btn" (click)="openEdit()">✏️ Edit</button>
+        <button class="delete-btn" (click)="onDelete()">🗑️ Delete</button>
+      </div>
     </div>
+  </div>
+</div>
 
+<!-- EDIT POPUP -->
+<div class="popup-overlay" *ngIf="showEditPopup" (click)="closeEdit()">
+  <div class="popup-content" (click)="$event.stopPropagation()">
+    <div class="popup-header">
+      <h2>✏️ Edit service</h2>
+      <button class="close-btn" (click)="closeEdit()">×</button>
+    </div>
+    <div class="popup-body">
+      <div class="form-group">
+        <label>Title</label>
+        <input type="text" [(ngModel)]="editData.title" placeholder="Service title" />
+      </div>
+      <div class="form-group">
+        <label>Description</label>
+        <textarea [(ngModel)]="editData.description" rows="4" placeholder="Description"></textarea>
+      </div>
+      <div class="form-group">
+        <label>Price ($)</label>
+        <input type="number" [(ngModel)]="editData.price" placeholder="Price" />
+      </div>
+    </div>
+    <div class="popup-footer">
+      <button class="cancel-btn" (click)="closeEdit()">Cancel</button>
+      <button class="save-btn" (click)="saveEdit()">Save changes</button>
+    </div>
+  </div>
 </div>

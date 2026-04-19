@@ -1,22 +1,3 @@
-<a routerLink="/login">Login</a>
-<a routerLink="/registration">Register</a>
-<button (click)="logout()">LogOut</button>
-<<<<<<< HEAD
-<a routerLink="/login">Login</a>
-<a routerLink="/registration">Register</a>
-<button (click)="logout()">LogOut</button>
-=======
-<!-- HEADER -->
-<header class="header">
-    <div class="logo">🎓 KBTU Services</div>
-    <nav class="nav">
-        <a>Home</a>
-        <a>Services</a>
-        <a>Requests</a>
-        <a>Profile</a>
-        <a class="login">Login</a>
-    </nav>
-</header>
 
 <!-- HERO -->
 <section class="hero">
@@ -34,11 +15,9 @@
 <section class="categories-section">
     <h2>Popular categories</h2>
     <div class="categories">
-        <div class="cat">📐 Math</div>
-        <div class="cat">💻 Programming</div>
-        <div class="cat">✍️ Writing</div>
-        <div class="cat">🎨 Design</div>
-        <div class="cat">🔬 Science</div>
+        <div *ngFor="let cat of categories$ | async">
+            <div class="cat">{{cat.name}}</div>
+        </div>
     </div>
 </section>
 
@@ -50,108 +29,21 @@
     </div>
 
     <div class="grid">
-        <!-- КАРТОЧКА 1 (пример) -->
-        <div class="card">
-            <div class="card-image"></div>
-            <div class="card-content">
-                <div class="badge math">📐 Math</div>
-                <h3>Linear Algebra Help</h3>
-                <p class="author">by Student</p>
-                <div class="rating">⭐ 4.8 <span>(124 reviews)</span></div>
-                <div class="bottom">
-                    <span class="price">$12</span>
-                    <button>Order</button>
-                </div>
+        <div *ngFor="let service of services$ | async">
+            <div class="card">
+                <div class="card-content">
+                    <div class="badge math">{{service.category_name}}</div>
+                    <h3>{{service.title}}</h3>
+                    <p class="author">{{service.author_username}}</p>
+                    <div class="rating">⭐ {{service.average_rating}} <span>({{service.total_votes}} reviews)</span></div>
+                    <div class="bottom">
+                        <span class="price">{{service.price}}</span>
+                        <button>Order</button>
+                    </div>
             </div>
         </div>
-
-        <!-- КАРТОЧКА 2 (пример) -->
-        <div class="card">
-            <div class="card-image"></div>
-            <div class="card-content">
-                <div class="badge prog">💻 Programming</div>
-                <h3>Python Assignment</h3>
-                <p class="author">by Student</p>
-                <div class="rating">⭐ 4.9 <span>(87 reviews)</span></div>
-                <div class="bottom">
-                    <span class="price">$20</span>
-                    <button>Order</button>
-                </div>
-            </div>
         </div>
-
-        <!-- КАРТОЧКА 3 (пример) -->
-        <div class="card">
-            <div class="card-image"></div>
-            <div class="card-content">
-                <div class="badge write">✍️ Writing</div>
-                <h3>Essay Writing Help</h3>
-                <p class="author">by Student</p>
-                <div class="rating">⭐ 4.7 <span>(56 reviews)</span></div>
-                <div class="bottom">
-                    <span class="price">$10</span>
-                    <button>Order</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- КАРТОЧКА 4 (пример) -->
-        <div class="card">
-            <div class="card-image"></div>
-            <div class="card-content">
-                <div class="badge design">🎨 Design</div>
-                <h3>Presentation Design</h3>
-                <p class="author">by Student</p>
-                <div class="rating">⭐ 4.8 <span>(34 reviews)</span></div>
-                <div class="bottom">
-                    <span class="price">$15</span>
-                    <button>Order</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- REQUESTS SECTION (шаблон запросов) -->
-<section class="requests-section">
-    <div class="section-header">
-        <h2>📝 Recent requests</h2>
-        <a class="view-all">Post a request →</a>
-    </div>
-
-    <div class="requests-grid">
-        <!-- ЗАПРОС 1 -->
-        <div class="request-card">
-            <div class="request-badge urgent">Urgent</div>
-            <h4>Need help with Calculus exam</h4>
-            <p>by Student • Math</p>
-            <div class="request-bottom">
-                <span class="budget">💰 $25</span>
-                <button class="offer-btn">Make offer</button>
-            </div>
-        </div>
-
-        <!-- ЗАПРОС 2 -->
-        <div class="request-card">
-            <div class="request-badge new">New</div>
-            <h4>Python Django project</h4>
-            <p>by Student • Programming</p>
-            <div class="request-bottom">
-                <span class="budget">💰 $40</span>
-                <button class="offer-btn">Make offer</button>
-            </div>
-        </div>
-
-        <!-- ЗАПРОС 3 -->
-        <div class="request-card">
-            <div class="request-badge flexible">Flexible</div>
-            <h4>Research paper editing</h4>
-            <p>by Student • Writing</p>
-            <div class="request-bottom">
-                <span class="budget">💰 $15</span>
-                <button class="offer-btn">Make offer</button>
-            </div>
-        </div>
+        
     </div>
 </section>
 
@@ -184,27 +76,3 @@
     </div>
 </section>
 
-<!-- FOOTER -->
-<footer class="footer">
-    <div class="footer-content">
-        <div class="footer-col">
-            <h4>🎓 KBTU Services</h4>
-            <p>Student marketplace for university tasks</p>
-        </div>
-        <div class="footer-col">
-            <h4>Quick links</h4>
-            <a>Browse services</a>
-            <a>Post a request</a>
-            <a>How it works</a>
-        </div>
-        <div class="footer-col">
-            <h4>Support</h4>
-            <a>Help center</a>
-            <a>Contact us</a>
-        </div>
-    </div>
-    <div class="footer-bottom">
-        © 2026 KBTU Services — студенческий маркетплейс
-    </div>
-</footer>
->>>>>>> 295a546 (css and html)

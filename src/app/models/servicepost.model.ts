@@ -7,5 +7,7 @@ export interface ServicePost{
     author: number,
     author_username: string,
     category: number,
-    category_name: string
+    category_name: string,
+    average_rating: number,
+    total_votes: number,
 }

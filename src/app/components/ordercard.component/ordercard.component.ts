@@ -1,11 +1,17 @@
-import { Component } from '@angular/core';
-
+import { Component ,input, output} from '@angular/core';
+import { Order } from '../../models/order.model';
+import { DatePipe } from '@angular/common';
 @Component({
-  selector: 'app-ordercard.component',
-  imports: [],
+  selector: 'app-ordercard',
+  imports: [DatePipe],
   templateUrl: './ordercard.component.html',
   styleUrl: './ordercard.component.css',
 })
 export class OrdercardComponent {
+  order = input.required<Order>();
+  deleted = output<number>();
 
+  onDelete(){
+    this.deleted.emit(this.order().id);
+  }
 }

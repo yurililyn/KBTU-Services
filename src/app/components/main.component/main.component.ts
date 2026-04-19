@@ -20,16 +20,9 @@ export class MainComponent {
   constructor(
     private catService: CategoryService, 
     private serposService: ServicepostService,
-    private auth : AuthService,
     private router : Router
   ) {
     this.categories$ = this.catService.getAll();
     this.services$ = this.serposService.getAll();
-  }
-
-
-  logout(){
-    this.auth.logout();
-    this.router.navigate(["/login"]);
   }
 }
