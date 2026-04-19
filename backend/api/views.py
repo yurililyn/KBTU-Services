@@ -61,17 +61,30 @@ class ServicePostDetailView(generics.RetrieveUpdateDestroyAPIView):
 # --- ЗАКАЗЫ ---
 class OrderListCreateView(generics.ListCreateAPIView):
     serializer_class = OrderSerializer
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
+    
+    # 1. Подключаем движок фильтрации
     filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
-    filterset_fields = ['status', 'service', 'customer', 'service__author']
-    ordering_fields = ['created_at', 'status']
+    
+    # 2. Разрешаем фильтровать по этим полям через URL
+    # 'customer' — для вкладки "My Orders"
+    # 'service__author' — для вкладки "Received Orders"
+    filterset_fields = ['customer', 'service__author', 'status']
+    
     ordering = ['-created_at']
 
     def get_queryset(self):
         user = self.request.user
-        if user.is_anonymous:
+        
+        # ЕСЛИ ЮЗЕР НЕ АВТОРИЗОВАН
+        if not user.is_authenticated:
+            # Возвращаем пустой список заказов вместо ошибки
             return Order.objects.none()
-        return Order.objects.filter(Q(customer=user) | Q(service__author=user)).distinct()
+
+        # Если авторизован, работаем как обычно
+        return Order.objects.filter(
+            Q(customer=user) | Q(service__author=user)
+        ).distinct()
 
     def perform_create(self, serializer):
         serializer.save(customer=self.request.user)
@@ -81,12 +94,38 @@ class OrderDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = OrderSerializer
     permission_classes = [IsAuthenticated]
 
-# --- ОТЗЫВЫ ---
 class ReviewCreateUpdateView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request, pk):
         service = get_object_or_404(ServicePost, pk=pk)
+        
+        # --- НАЧАЛО НОВЫХ ПРОВЕРОК ---
+        
+        # ЗАЩИТА 1: Продавец не может оценивать свою собственную услугу
+        if service.author == request.user:
+            return Response(
+                {"detail": "Вы не можете оставлять отзыв на свою собственную услугу."}, 
+                status=status.HTTP_403_FORBIDDEN
+            )
+
+        # ЗАЩИТА 2: Оставить отзыв может только тот, кто реально заказал услугу 
+        # (и заказ находится в статусе accepted или completed)
+        has_valid_order = Order.objects.filter(
+            customer=request.user, 
+            service=service, 
+            status__in=['accepted', 'completed'] # Учитываем только принятые или завершенные заказы
+        ).exists()
+        
+        if not has_valid_order:
+            return Response(
+                {"detail": "Вы можете оценивать только те услуги, которые вы заказали."}, 
+                status=status.HTTP_403_FORBIDDEN
+            )
+            
+        # --- КОНЕЦ НОВЫХ ПРОВЕРОК ---
+
+        # Старая логика создания или обновления отзыва
         review = Review.objects.filter(user=request.user, service=service).first()
         
         if review:
@@ -97,4 +136,5 @@ class ReviewCreateUpdateView(APIView):
         if serializer.is_valid():
             serializer.save(user=request.user, service=service)
             return Response(serializer.data, status=status.HTTP_200_OK)
+            
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

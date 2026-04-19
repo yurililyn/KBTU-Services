@@ -32,15 +32,28 @@ class OrderSerializer(serializers.ModelSerializer):
     service_title = serializers.ReadOnlyField(source='service.title')
     service_author_id = serializers.ReadOnlyField(source='service.author.id')
     
+    user_role = serializers.SerializerMethodField() 
+    
     class Meta:
         model = Order
         fields = [
             'id', 'customer', 'customer_username', 'service', 
             'service_title', 'service_author_id', 'message', 
-            'status', 'created_at'
+            'status', 'created_at', 
+            'user_role' # 2. И СЮДА ЕГО НУЖНО БЫЛО ДОБАВИТЬ
         ]
-        # ВАЖНО: status НЕ должен быть в read_only_fields, чтобы его можно было менять
         read_only_fields = ['customer', 'created_at']
+
+    def get_user_role(self, obj):
+        # Добавил безопасную проверку, чтобы код не падал, если реквеста вдруг нет
+        request = self.context.get('request')
+        if request and hasattr(request, 'user'):
+            user = request.user
+            if obj.customer == user:
+                return "customer"  # Покупатель
+            if obj.service.author == user:
+                return "author"    # Продавец
+        return "none"
 
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
