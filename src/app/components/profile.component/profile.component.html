@@ -28,7 +28,15 @@
 
 <!-- TAB 1: MY SERVICES -->
 <div class="tab-content" *ngIf="activeTab === 'services'">
-    <ng-container *ngIf="services.length <= 0">You don't have any!</ng-container>
+  <div style="display:flex; justify-content:flex-end; margin-bottom:16px;">
+    <button class="create-service-btn" (click)="openCreatePopup()">+ Add service</button>
+  </div>
+  <ng-container *ngIf="services.length <= 0">
+  <div class="empty-state">
+    <span class="empty-icon">📭</span>
+    <p>You don't have any services yet</p>
+  </div>
+  </ng-container>
   <app-servicepostcard *ngFor="let service of services" [service]="service"
                         (deleted)="onServiceDeleted($event)"
                         (updated)="onServiceUpdated($event)"></app-servicepostcard>
@@ -36,13 +44,59 @@
 
 <!-- TAB 2: MY REQUESTS -->
 <div class="tab-content" *ngIf="activeTab === 'requests'">
-    <ng-container *ngIf="services.length <= 0">You don't have any!</ng-container>
+    <ng-container *ngIf="orders.length <= 0">
+  <div class="empty-state">
+    <span class="empty-icon">📭</span>
+    <p>You don't have any orders yet</p>
+  </div>
+</ng-container>
     <app-ordercard *ngFor="let order of orders" [order]="order"
                     (deleted)="onOrderDelete($event)"></app-ordercard>
 </div>
 
 <!-- TAB 3: ORDERS RECEIVED -->
 <div class="tab-content" *ngIf="activeTab === 'orders'">
-    <ng-container *ngIf="services.length <= 0">You don't have any!</ng-container>
+    <ng-container *ngIf="orders.length <= 0">
+  <div class="empty-state">
+    <span class="empty-icon">📭</span>
+    <p>You don't have any orders yet</p>
+  </div>
+</ng-container>
 </div>
 
+
+
+<!-- CREATE SERVICE POPUP -->
+<div class="create-popup-overlay" *ngIf="showCreatePopup" (click)="closeCreatePopup()">
+  <div class="create-popup-content" (click)="$event.stopPropagation()">
+    <div class="popup-header">
+      <h2>✨ New service</h2>
+      <button class="close-popup" (click)="closeCreatePopup()">×</button>
+    </div>
+    <div class="popup-body">
+      <div class="form-group">
+        <label>Title</label>
+        <input class="popup-input" type="text" [(ngModel)]="newService.title" placeholder="e.g. Math homework help" />
+      </div>
+      <div class="form-group">
+        <label>Description</label>
+        <textarea class="popup-textarea" [(ngModel)]="newService.description" rows="4" placeholder="Describe your service..."></textarea>
+      </div>
+      <div class="form-group">
+        <label>Price ($)</label>
+        <input class="popup-input" type="number" [(ngModel)]="newService.price" placeholder="10" />
+      </div>
+      <div class="form-group">
+        <label>Category</label>
+        <select class="popup-select" [(ngModel)]="newService.category">
+          <option [ngValue]="null" disabled>Select category</option>
+          <option *ngFor="let cat of categories" [ngValue]="cat.id">{{ cat.name }}</option>
+        </select>
+      </div>
+    </div>
+    <div class="popup-footer">
+      <button class="cancel-btn" (click)="closeCreatePopup()">Cancel</button>
+      <button class="submit-btn" (click)="onServiceCreate()">Publish →</button>
+    </div>
+  </div>
+</div>

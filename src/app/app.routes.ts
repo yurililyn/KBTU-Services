@@ -5,6 +5,7 @@ import { RegisterComponent } from './components/registration.component/registrat
 import { authGuard } from './auth-guard';
 import { profileGuard } from './profile-guard';
 import { ProfileComponent } from './components/profile.component/profile.component';
+import { SearchComponent } from './components/search/search.component';
 export const routes: Routes = [
     {
         path: "",
@@ -32,7 +33,13 @@ export const routes: Routes = [
         canActivate: [authGuard]
     },
     {
+        path: "search",
+        component: SearchComponent,
+        canActivate: [authGuard]
+    },
+    {
         path: '**',
         redirectTo: '/main'
-    }
+    },
+    
 ];

@@ -1,0 +1,53 @@
+<div class="search-container">
+
+  <div class="search-header">
+    <div class="search-bar">
+      <input
+        type="text"
+        [(ngModel)]="searchQuery"
+        placeholder="Search for a service..."
+        (keyup.enter)="onSearch()"
+      />
+      <button (click)="onSearch()">🔍 Search</button>
+    </div>
+    <p class="results-count" *ngIf="!isLoading">
+      {{ services.length }} results found
+    </p>
+  </div>
+
+  <div class="loading" *ngIf="isLoading">
+    <span class="spinner"></span>
+  </div>
+
+  <div class="empty" *ngIf="!isLoading && services.length === 0">
+    <p>😕 No services found</p>
+    <span>Try a different search or category</span>
+  </div>
+  <div class="filters">
+  <select (change)="onOrderingChange($any($event.target).value)">
+    <option value="">Sort: Default</option>
+    <option value="price">Price: Low to High</option>
+    <option value="-price">Price: High to Low</option>
+    <option value="created_at">Oldest first</option>
+    <option value="-created_at">Newest first</option>
+  </select>
+</div>
+  <div class="grid" *ngIf="!isLoading && services.length > 0">
+    <div class="card" *ngFor="let service of services">
+      <div class="card-image"></div>
+      <div class="card-content">
+        <div class="badge">{{ service.category_name }}</div>
+        <h3>{{ service.title }}</h3>
+        <p class="description">{{ service.description }}</p>
+        <p class="author">👤 {{ service.author_username }}</p>
+        <div class="rating">⭐ {{ service.average_rating }}
+          <span>({{ service.total_votes }} reviews)</span>
+        </div>
+        <div class="bottom">
+          <span class="price">{{ service.price }}$</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

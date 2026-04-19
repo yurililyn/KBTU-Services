@@ -1,13 +1,17 @@
-
 <!-- HERO -->
 <section class="hero">
-    <span class="hero-badge">🔥 Student Marketplace</span>
+    <span class="hero-badge">Student Paradise</span>
     <h1>Find help with your<br>university tasks</h1>
     <p>Math, Programming, Writing, Design — all in one place</p>
 
     <div class="search-box">
-        <input type="text" placeholder="Search for a service..." />
-        <button>🔍 Search</button>
+        <input 
+          type="text" 
+          placeholder="Search for a service..." 
+          [(ngModel)]="searchQuery"
+          (keyup.enter)="onSearch()"
+        />
+        <button (click)="onSearch()">🔍 Search</button>
     </div>
 </section>
 
@@ -15,17 +19,17 @@
 <section class="categories-section">
     <h2>Popular categories</h2>
     <div class="categories">
-        <div *ngFor="let cat of categories$ | async">
+        <div *ngFor="let cat of categories$ | async" (click)="onCategory(cat.id)">
             <div class="cat">{{cat.name}}</div>
         </div>
     </div>
 </section>
 
-<!-- SERVICES SECTION (ТОЛЬКО ШАБЛОН) -->
+<!-- SERVICES SECTION -->
 <section class="services-section">
     <div class="section-header">
         <h2>🔥 Popular services</h2>
-        <a class="view-all">View all →</a>
+        <a class="view-all" (click)="onViewAll()">View all →</a>
     </div>
 
     <div class="grid">
@@ -38,41 +42,9 @@
                     <div class="rating">⭐ {{service.average_rating}} <span>({{service.total_votes}} reviews)</span></div>
                     <div class="bottom">
                         <span class="price">{{service.price}}</span>
-                        <button>Order</button>
                     </div>
+                </div>
             </div>
         </div>
-        </div>
-        
     </div>
 </section>
-
-<!-- TOP SECTION (шаблон) -->
-<section class="top-section">
-    <div class="section-header">
-        <h2>⭐ Top rated students</h2>
-        <a class="view-all">View all →</a>
-    </div>
-
-    <div class="top-grid">
-        <div class="top-card">
-            <div class="avatar">👩‍🎓</div>
-            <h4>Student name</h4>
-            <p>Math • 120 orders</p>
-            <div class="rating">⭐ 4.9</div>
-        </div>
-        <div class="top-card">
-            <div class="avatar">👨‍💻</div>
-            <h4>Student name</h4>
-            <p>Programming • 85 orders</p>
-            <div class="rating">⭐ 4.8</div>
-        </div>
-        <div class="top-card">
-            <div class="avatar">✍️</div>
-            <h4>Student name</h4>
-            <p>Writing • 64 orders</p>
-            <div class="rating">⭐ 4.9</div>
-        </div>
-    </div>
-</section>
-

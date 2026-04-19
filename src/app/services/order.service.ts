@@ -15,16 +15,16 @@ export class OrderService {
   }
 
   getByAuthor(id: number): Observable<Order[]>{
-    return this.http.get<Order[]>(`${this.apiUrl}/?customer${id}`);
+    return this.http.get<Order[]>(`${this.apiUrl}/?customer${id}/`);
   }
 
   getRequested(id: number): Observable<Order[]>{
-    return this.http.get<Order[]>(`${this.apiUrl}/?customer${id}`);
+    return this.http.get<Order[]>(`${this.apiUrl}/?customer${id}/`);
   }
 
 
   delete(id: number){
     alert("i'm here")
-    return this.http.delete(`${this.apiUrl}/${id}`);
+    return this.http.delete(`${this.apiUrl}/${id}/`);
   }
 }

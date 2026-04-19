@@ -12,6 +12,7 @@ export class OrdercardComponent {
   deleted = output<number>();
 
   onDelete(){
+    alert("hello");
     this.deleted.emit(this.order().id);
   }
 }

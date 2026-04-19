@@ -11,9 +11,12 @@ import { ServicePost } from '../../models/servicepost.model';
 import { forkJoin } from 'rxjs';
 import { Order } from '../../models/order.model';
 import { ChangeDetectorRef } from '@angular/core';
+import { Category } from '../../models/category.model';
+import { CategoryService } from '../../services/category.service';
+import { FormsModule } from '@angular/forms';
 @Component({
   selector: 'app-profile',
-  imports: [CommonModule, ServicepostcardComponent, OrdercardComponent],
+  imports: [CommonModule, ServicepostcardComponent, OrdercardComponent, FormsModule],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css',
 })
@@ -23,26 +26,32 @@ export class ProfileComponent implements OnInit {
   services : ServicePost[] = [];
   orders: Order[] = [];
   requestedOrders: Order[] = [];
-
+  categories: Category[] = [];
+  showCreatePopup = false;
+  newService = { title: '', description: '', price: 0, category: null as number | null };
   constructor(private auth: AuthService , private serpostService : ServicepostService,
-    private ordService : OrderService, private cdr: ChangeDetectorRef
+    private ordService : OrderService, private cdr: ChangeDetectorRef, private categoryService : CategoryService
   ) {
     this.profile$ = this.auth.profile$;
   }
 
   ngOnInit() {
-  this.auth.getProfile().pipe(
-    switchMap(user => forkJoin({
-      services: this.serpostService.getByAuthor(user.id),
-      orders: this.ordService.getAll(),
-      requestedOrders: this.ordService.getRequested(user.id)
-    }))
-  ).subscribe(result => {
-    this.services = result.services;
-    this.orders = result.orders;
-    this.requestedOrders = result.requestedOrders;
+    this.auth.getProfile().pipe(
+      switchMap(user => forkJoin({
+        services: this.serpostService.getByAuthor(user.id),
+        orders: this.ordService.getAll(),
+        requestedOrders: this.ordService.getRequested(user.id)
+      }))
+    ).subscribe(result => {
+      this.services = result.services;
+      this.orders = result.orders;
+      this.requestedOrders = result.requestedOrders;
+      this.cdr.detectChanges();
+    });
+    this.categoryService.getAll().subscribe(cats => {
+    this.categories = cats;
     this.cdr.detectChanges();
-  });
+});
 }
 
 
@@ -76,5 +85,25 @@ export class ProfileComponent implements OnInit {
       this.orders = this.orders.filter(s=>s.id != id);
       this.cdr.detectChanges();
     })
+  }
+
+
+
+  openCreatePopup() {
+    this.newService = { title: '', description: '', price: 0, category: null };
+    this.showCreatePopup = true;
+  }
+
+  closeCreatePopup() {
+    this.showCreatePopup = false;
+  }
+
+  onServiceCreate() {
+    if (!this.newService.title || !this.newService.price || !this.newService.category) return;
+    this.serpostService.create(this.newService).subscribe(created => {
+      this.services = [created, ...this.services];
+      this.showCreatePopup = false;
+      this.cdr.detectChanges();
+    });
   }
 }
