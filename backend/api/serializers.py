@@ -26,6 +26,15 @@ class RegisterSerializer(serializers.ModelSerializer):
             last_name=validated_data['last_name']
         )
         return user
+    
+# ==========================================
+# ПРОФИЛЬ ПОЛЬЗОВАТЕЛЯ (/me)
+# ==========================================
+class UserProfileSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        # Перечисляем только те поля, которые безопасно отдавать фронтенду
+        fields = ['id', 'username', 'email', 'first_name', 'last_name']
 
 # ==========================================
 # 2 ОБЫЧНЫХ SERIALIZER (Plain Serializers)

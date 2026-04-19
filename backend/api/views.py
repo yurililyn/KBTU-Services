@@ -6,6 +6,7 @@ from rest_framework.authtoken.models import Token
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from .serializers import RegisterSerializer
+from .serializers import UserProfileSerializer
 
 from .models import Category, ServicePost, Order
 from .serializers import (
@@ -27,6 +28,25 @@ class RegisterView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = RegisterSerializer
     permission_classes = [AllowAny] # Разрешаем регистрацию кому угодно
+
+# ==========================================
+# ПРОФИЛЬ ТЕКУЩЕГО ПОЛЬЗОВАТЕЛЯ
+# ==========================================
+class UserProfileView(generics.RetrieveAPIView):
+    """
+    Эндпоинт: GET /api/profile/
+    Функционал: Возвращает данные текущего авторизованного юзера
+    Доступ: Только с токеном (IsAuthenticated)
+    """
+    serializer_class = UserProfileSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        """
+        Вместо того чтобы искать пользователя по ID из URL, 
+        мы просто берем пользователя из токена авторизации (request.user)
+        """
+        return self.request.user
 
 # ==========================================
 # CLASS-BASED VIEWS (CBV)

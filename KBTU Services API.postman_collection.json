@@ -441,6 +441,43 @@
         }
       },
       "response": []
+    },
+    {
+      "name": "14. Get User",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc2NTg1NzkxLCJpYXQiOjE3NzY1ODU0OTEsImp0aSI6ImRhNzljNGM5YWMzZjRlNTlhNTY0NWZjNmQxMTRmYmM4IiwidXNlcl9pZCI6IjEifQ.wwp7Qblpw6y6iEBuhXqp3k-cbtsK8twdMkyNvrId4uA",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": ""
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/profile/",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "profile",
+            ""
+          ]
+        }
+      },
+      "response": []
     }
   ]
 }
