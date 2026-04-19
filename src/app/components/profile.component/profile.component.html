@@ -1,1 +1,562 @@
-<p>profile.component works!</p>
+<!-- HEADER -->
+<header class="header">
+    <div class="logo">🎓 KBTU Services</div>
+    <nav class="nav">
+        <a>Home</a>
+        <a>Services</a>
+        <a>Requests</a>
+        <a class="active">Profile</a>
+        <a class="login">Logout</a>
+    </nav>
+</header>
+
+<!-- MAIN PROFILE CONTENT -->
+<div class="profile-container">
+
+    <!-- PROFILE HEADER (cover + avatar) -->
+    <div class="profile-header">
+        <div class="cover-image"></div>
+        <div class="profile-info">
+            <div class="avatar">👨‍🎓</div>
+            <h1 class="animate-title">Student Name</h1>
+            <p class="student-id animate-fade">ID: 2024XXXXX</p>
+            <p class="student-bio animate-fade">Computer Science student • 3rd year</p>
+            <div class="stats">
+                <div class="stat">
+                    <span class="stat-value">24</span>
+                    <span class="stat-label">Services sold</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-value">4.9</span>
+                    <span class="stat-label">Rating ⭐</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-value">12</span>
+                    <span class="stat-label">Active orders</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TABS (переключение между разделами) -->
+    <div class="tabs">
+        <div class="tab" data-tab="services">📦 My Services</div>
+        <div class="tab active" data-tab="requests">📝 My Requests</div>
+        <div class="tab" data-tab="orders">🛒 Orders received</div>
+        <div class="tab" data-tab="settings">⚙️ Settings</div>
+    </div>
+
+    <!-- TAB 1: MY SERVICES -->
+    <div class="tab-content" id="services-tab">
+        <div class="create-btn-wrapper">
+            <button class="create-service-btn" id="openPopupBtn">➕ Create new service</button>
+        </div>
+        <div class="services-list">
+            <div class="service-item">
+                <div class="service-image"></div>
+                <div class="service-details">
+                    <div class="badge math">📐 Math</div>
+                    <h3>Linear Algebra Help</h3>
+                    <p>I help with matrices, vectors, and linear equations</p>
+                    <div class="service-meta">
+                        <span class="price">$12/hour</span>
+                        <span class="orders">📊 15 orders</span>
+                        <span class="rating">⭐ 4.9</span>
+                    </div>
+                </div>
+                <div class="service-actions">
+                    <button class="edit-btn">✏️ Edit</button>
+                    <button class="delete-btn">🗑️ Delete</button>
+                </div>
+            </div>
+            <div class="service-item">
+                <div class="service-image"></div>
+                <div class="service-details">
+                    <div class="badge prog">💻 Programming</div>
+                    <h3>Python Assignment Help</h3>
+                    <p>Python, Django, Flask — debugging and code review</p>
+                    <div class="service-meta">
+                        <span class="price">$20/hour</span>
+                        <span class="orders">📊 8 orders</span>
+                        <span class="rating">⭐ 4.8</span>
+                    </div>
+                </div>
+                <div class="service-actions">
+                    <button class="edit-btn">✏️ Edit</button>
+                    <button class="delete-btn">🗑️ Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 2: MY REQUESTS (НОВЫЙ БЛОК) -->
+    <div class="tab-content" id="requests-tab" style="display: block;">
+        <div class="create-btn-wrapper">
+            <button class="create-service-btn" id="openRequestPopupBtn">➕ Post new request</button>
+        </div>
+
+        <div class="requests-list">
+            <!-- ЗАПРОС 1 -->
+            <div class="request-item">
+                <div class="request-status pending">⏳ Pending</div>
+                <div class="request-details">
+                    <h3>Need help with Calculus exam</h3>
+                    <p>I have an exam next week, need help with limits and derivatives</p>
+                    <div class="request-meta">
+                        <span class="category">📐 Math</span>
+                        <span class="budget">💰 Budget: $25</span>
+                        <span class="deadline">📅 Deadline: 5 days</span>
+                    </div>
+                </div>
+                <div class="request-offers">
+                    <span class="offers-count">3 offers received</span>
+                    <button class="view-offers-btn">View offers →</button>
+                </div>
+            </div>
+
+            <!-- ЗАПРОС 2 -->
+            <div class="request-item">
+                <div class="request-status in-progress">🔄 In progress</div>
+                <div class="request-details">
+                    <h3>Python Django project</h3>
+                    <p>Need a web app for university project</p>
+                    <div class="request-meta">
+                        <span class="category">💻 Programming</span>
+                        <span class="budget">💰 Budget: $40</span>
+                        <span class="deadline">📅 Deadline: 10 days</span>
+                    </div>
+                </div>
+                <div class="request-offers">
+                    <span class="assigned-to">Assigned to: Arman S.</span>
+                    <button class="message-btn">💬 Message</button>
+                </div>
+            </div>
+
+            <!-- ЗАПРОС 3 -->
+            <div class="request-item">
+                <div class="request-status completed">✅ Completed</div>
+                <div class="request-details">
+                    <h3>Research paper editing</h3>
+                    <p>Need proofreading for my sociology paper</p>
+                    <div class="request-meta">
+                        <span class="category">✍️ Writing</span>
+                        <span class="budget">💰 Budget: $15</span>
+                    </div>
+                </div>
+                <div class="request-offers">
+                    <span class="completed-by">Completed by: Dana M.</span>
+                    <button class="review-btn">⭐ Leave review</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 3: ORDERS RECEIVED (НОВЫЙ БЛОК) -->
+    <div class="tab-content" id="orders-tab">
+        <div class="orders-stats">
+            <div class="order-stat-card">
+                <span class="order-stat-value">8</span>
+                <span class="order-stat-label">Active orders</span>
+            </div>
+            <div class="order-stat-card">
+                <span class="order-stat-value">24</span>
+                <span class="order-stat-label">Completed</span>
+            </div>
+            <div class="order-stat-card">
+                <span class="order-stat-value">$480</span>
+                <span class="order-stat-label">Total earned</span>
+            </div>
+        </div>
+
+        <div class="orders-list">
+            <!-- ЗАКАЗ 1 -->
+            <div class="order-item">
+                <div class="order-avatar">👤</div>
+                <div class="order-details">
+                    <h3>Linear Algebra Help</h3>
+                    <p class="order-buyer">from Madina K. • 2 days ago</p>
+                    <div class="order-meta">
+                        <span class="order-price">$12</span>
+                        <span class="order-status active">🟢 In progress</span>
+                    </div>
+                </div>
+                <div class="order-actions">
+                    <button class="deliver-btn">📎 Deliver work</button>
+                    <button class="message-btn">💬 Message</button>
+                </div>
+            </div>
+
+            <!-- ЗАКАЗ 2 -->
+            <div class="order-item">
+                <div class="order-avatar">👤</div>
+                <div class="order-details">
+                    <h3>Python Assignment Help</h3>
+                    <p class="order-buyer">from Arman S. • 5 days ago</p>
+                    <div class="order-meta">
+                        <span class="order-price">$20</span>
+                        <span class="order-status completed">✅ Completed</span>
+                    </div>
+                </div>
+                <div class="order-actions">
+                    <button class="view-btn">👁️ View</button>
+                    <button class="review-btn">⭐ Rate buyer</button>
+                </div>
+            </div>
+
+            <!-- ЗАКАЗ 3 -->
+            <div class="order-item">
+                <div class="order-avatar">👤</div>
+                <div class="order-details">
+                    <h3>Essay Editing</h3>
+                    <p class="order-buyer">from Aigerim T. • 1 week ago</p>
+                    <div class="order-meta">
+                        <span class="order-price">$10</span>
+                        <span class="order-status pending">⏳ Pending review</span>
+                    </div>
+                </div>
+                <div class="order-actions">
+                    <button class="view-btn">👁️ View</button>
+                    <button class="message-btn">💬 Message</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TAB 4: SETTINGS (простой) -->
+    <div class="tab-content" id="settings-tab">
+        <div class="settings-form">
+            <h3>Profile settings</h3>
+            <div class="setting-field">
+                <label>Full name</label>
+                <input type="text" placeholder="Student Name" value="Student Name">
+            </div>
+            <div class="setting-field">
+                <label>Email</label>
+                <input type="email" placeholder="student@kbtu.edu.kz">
+            </div>
+            <div class="setting-field">
+                <label>Bio</label>
+                <textarea placeholder="Tell others about yourself...">Computer Science student, 3rd year</textarea>
+            </div>
+            <button class="save-btn">Save changes</button>
+        </div>
+    </div>
+</div>
+
+<!-- POPUP: CREATE SERVICE (НОВЫЙ) -->
+<div id="servicePopup" class="popup-overlay">
+    <div class="popup-content popup-animate">
+        <div class="popup-header">
+            <h2>✨ Create new service</h2>
+            <button class="close-popup">&times;</button>
+        </div>
+        <div class="popup-body">
+            <div class="form-group">
+                <label>Service title</label>
+                <input type="text" placeholder="e.g., Math homework help" class="popup-input">
+            </div>
+            <div class="form-group">
+                <label>Category</label>
+                <select class="popup-select">
+          <option>📐 Math</option>
+          <option>💻 Programming</option>
+          <option>✍️ Writing</option>
+          <option>🎨 Design</option>
+        </select>
+            </div>
+            <div class="form-group">
+                <label>Price ($/hour)</label>
+                <input type="number" placeholder="10" class="popup-input">
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <textarea placeholder="Describe your service..." rows="4" class="popup-textarea"></textarea>
+            </div>
+        </div>
+        <div class="popup-footer">
+            <button class="cancel-btn">Cancel</button>
+            <button class="submit-btn">Publish service →</button>
+        </div>
+    </div>
+</div>
+
+<!-- POPUP: POST REQUEST -->
+<div id="requestPopup" class="popup-overlay">
+    <div class="popup-content popup-animate">
+        <div class="popup-header">
+            <h2>📝 Post a new request</h2>
+            <button class="close-popup-request">&times;</button>
+        </div>
+        <div class="popup-body">
+            <div class="form-group">
+                <label>What do you need help with?</label>
+                <input type="text" placeholder="e.g., Calculus exam preparation" class="popup-input">
+            </div>
+            <div class="form-group">
+                <label>Category</label>
+                <select class="popup-select">
+          <option>📐 Math</option>
+          <option>💻 Programming</option>
+          <option>✍️ Writing</option>
+          <option>🎨 Design</option>
+        </select>
+            </div>
+            <div class="form-group">
+                <label>Budget ($)</label>
+                <input type="number" placeholder="25" class="popup-input">
+            </div>
+            <div class="form-group">
+                <label>Deadline</label>
+                <select class="popup-select">
+          <option>3 days</option>
+          <option>5 days</option>
+          <option>1 week</option>
+          <option>2 weeks</option>
+        </select>
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <textarea placeholder="Describe your task in detail..." rows="4" class="popup-textarea"></textarea>
+            </div>
+        </div>
+        <div class="popup-footer">
+            <button class="cancel-btn-request">Cancel</button>
+            <button class="submit-btn">Post request →</button>
+        </div>
+    </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="footer-content">
+        <div class="footer-col">
+            <h4>🎓 KBTU Services</h4>
+            <p>Student marketplace for university tasks</p>
+        </div>
+        <div class="footer-col">
+            <h4>Quick links</h4>
+            <a>Browse services</a>
+            <a>Post a request</a>
+            <a>How it works</a>
+        </div>
+        <div class="footer-col">
+            <h4>Support</h4>
+            <a>Help center</a>
+            <a>Contact us</a>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        © 2026 KBTU Services — студенческий маркетплейс
+    </div>
+</footer>
+
+<!-- Простой JS для переключения вкладок и попапов (без TS) -->
+<script>
+    // Переключение вкладок
+    const tabs = document.querySelectorAll('.tab');
+    const contents = {
+        services: document.getElementById('services-tab'),
+        requests: document.getElementById('requests-tab'),
+        orders: document.getElementById('orders-tab'),
+        settings: document.getElementById('settings-tab')
+    };
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            const tabName = tab.getAttribute('data-tab');
+
+            tabs.forEach(t => t.classList.remove('active'));
+            tab.classList.add('active');
+
+            Object.values(contents).forEach(content => {
+                if (content) content.style.display = 'none';
+            });
+
+            if (tabName === 'services') contents.services.style.display = 'block';
+            if (tabName === 'requests') contents.requests.style.display = 'block';
+            if (tabName === 'orders') contents.orders.style.display = 'block';
+            if (tabName === 'settings') contents.settings.style.display = 'block';
+        });
+    });
+
+    // Попап Create Service
+    const popup = document.getElementById('servicePopup');
+    const openPopupBtn = document.getElementById('openPopupBtn');
+    const closePopup = document.querySelector('.close-popup');
+    const cancelBtn = document.querySelector('.cancel-btn');
+
+    if (openPopupBtn) {
+        openPopupBtn.onclick = () => popup.style.display = 'flex';
+    }
+    if (closePopup) {
+        closePopup.onclick = () => popup.style.display = 'none';
+    }
+    if (cancelBtn) {
+        cancelBtn.onclick = () => popup.style.display = 'none';
+    }
+
+    // Попап Post Request
+    const requestPopup = document.getElementById('requestPopup');
+    const openRequestPopupBtn = document.getElementById('openRequestPopupBtn');
+    const closeRequestPopup = document.querySelector('.close-popup-request');
+    const cancelRequestBtn = document.querySelector('.cancel-btn-request');
+
+    if (openRequestPopupBtn) {
+        openRequestPopupBtn.onclick = () => requestPopup.style.display = 'flex';
+    }
+    if (closeRequestPopup) {
+        closeRequestPopup.onclick = () => requestPopup.style.display = 'none';
+    }
+    if (cancelRequestBtn) {
+        cancelRequestBtn.onclick = () => requestPopup.style.display = 'none';
+    }
+
+    // Закрытие по клику вне попапа
+    window.onclick = (event) => {
+        if (event.target === popup) popup.style.display = 'none';
+        if (event.target === requestPopup) requestPopup.style.display = 'none';
+    };
+</script>
+<!-- HEADER (такой же как на main) -->
+<header class="header">
+    <div class="logo">🎓 KBTU Services</div>
+    <nav class="nav">
+        <a>Home</a>
+        <a>Services</a>
+        <a>Requests</a>
+        <a class="active">Profile</a>
+        <a class="login">Logout</a>
+    </nav>
+</header>
+
+<!-- MAIN PROFILE CONTENT -->
+<div class="profile-container">
+
+    <!-- PROFILE HEADER (cover + avatar) -->
+    <div class="profile-header">
+        <div class="cover-image"></div>
+        <div class="profile-info">
+            <div class="avatar">👨‍🎓</div>
+            <h1>Student Name</h1>
+            <p class="student-id">ID: 2024XXXXX</p>
+            <p class="student-bio">Computer Science student • 3rd year</p>
+            <div class="stats">
+                <div class="stat">
+                    <span class="stat-value">24</span>
+                    <span class="stat-label">Services sold</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-value">4.9</span>
+                    <span class="stat-label">Rating ⭐</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-value">12</span>
+                    <span class="stat-label">Active orders</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- TABS (переключение между разделами) -->
+    <div class="tabs">
+        <div class="tab active">📦 My Services</div>
+        <div class="tab">📝 My Requests</div>
+        <div class="tab">🛒 Orders received</div>
+        <div class="tab">⚙️ Settings</div>
+    </div>
+
+    <!-- TAB CONTENT: MY SERVICES -->
+    <div class="tab-content">
+
+        <!-- Кнопка создания новой услуги -->
+        <div class="create-btn-wrapper">
+            <button class="create-service-btn">➕ Create new service</button>
+        </div>
+
+        <!-- Список услуг пользователя -->
+        <div class="services-list">
+
+            <!-- УСЛУГА 1 -->
+            <div class="service-item">
+                <div class="service-image"></div>
+                <div class="service-details">
+                    <div class="badge math">📐 Math</div>
+                    <h3>Linear Algebra Help</h3>
+                    <p>I help with matrices, vectors, and linear equations</p>
+                    <div class="service-meta">
+                        <span class="price">$12/hour</span>
+                        <span class="orders">📊 15 orders</span>
+                        <span class="rating">⭐ 4.9</span>
+                    </div>
+                </div>
+                <div class="service-actions">
+                    <button class="edit-btn">✏️ Edit</button>
+                    <button class="delete-btn">🗑️ Delete</button>
+                </div>
+            </div>
+
+            <!-- УСЛУГА 2 -->
+            <div class="service-item">
+                <div class="service-image"></div>
+                <div class="service-details">
+                    <div class="badge prog">💻 Programming</div>
+                    <h3>Python Assignment Help</h3>
+                    <p>Python, Django, Flask — debugging and code review</p>
+                    <div class="service-meta">
+                        <span class="price">$20/hour</span>
+                        <span class="orders">📊 8 orders</span>
+                        <span class="rating">⭐ 4.8</span>
+                    </div>
+                </div>
+                <div class="service-actions">
+                    <button class="edit-btn">✏️ Edit</button>
+                    <button class="delete-btn">🗑️ Delete</button>
+                </div>
+            </div>
+
+            <!-- УСЛУГА 3 -->
+            <div class="service-item">
+                <div class="service-image"></div>
+                <div class="service-details">
+                    <div class="badge write">✍️ Writing</div>
+                    <h3>Essay Editing & Proofreading</h3>
+                    <p>Academic writing, essays, research papers</p>
+                    <div class="service-meta">
+                        <span class="price">$10/hour</span>
+                        <span class="orders">📊 23 orders</span>
+                        <span class="rating">⭐ 4.9</span>
+                    </div>
+                </div>
+                <div class="service-actions">
+                    <button class="edit-btn">✏️ Edit</button>
+                    <button class="delete-btn">🗑️ Delete</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+    <div class="footer-content">
+        <div class="footer-col">
+            <h4>🎓 KBTU Services</h4>
+            <p>Student marketplace for university tasks</p>
+        </div>
+        <div class="footer-col">
+            <h4>Quick links</h4>
+            <a>Browse services</a>
+            <a>Post a request</a>
+            <a>How it works</a>
+        </div>
+        <div class="footer-col">
+            <h4>Support</h4>
+            <a>Help center</a>
+            <a>Contact us</a>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        © 2026 KBTU Services — студенческий маркетплейс
+    </div>
+</footer>
