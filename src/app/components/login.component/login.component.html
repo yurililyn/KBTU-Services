@@ -51,8 +51,8 @@
     <span *ngIf="!isLoading">Войти</span>
     <span *ngIf="isLoading" class="spinner"></span>
   </button>
-
-  <div class="demo-hint" *ngIf="!isAuth && !isLoading">
-    <small>демо: логин <code>admin</code> / пароль <code>admin123</code> → редирект</small>
-  </div>
 </form>
+<div class="register-link">
+    <span>Нет аккаунта?</span>
+    <a routerLink="/registration">Зарегистрироваться</a>
+</div>

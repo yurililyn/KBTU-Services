@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router , RouterLink} from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
 
@@ -8,7 +8,7 @@ import { CommonModule } from '@angular/common';
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
-  imports:[CommonModule , FormsModule , ReactiveFormsModule]
+  imports:[CommonModule , FormsModule , ReactiveFormsModule, RouterLink]
 })
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
