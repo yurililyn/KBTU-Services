@@ -1,20 +1,25 @@
 import { Injectable } from '@angular/core';
 import { Auth } from '../models/auth.model';
 import { HttpClient } from '@angular/common/http';
-import { tap } from 'rxjs';
+import { switchMap, tap } from 'rxjs';
 import { RegisterResponse } from '../models/register.mode';
+import { BehaviorSubject } from 'rxjs';
+import { User } from '../models/user.model';
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
     private logUrl = "http://127.0.0.1:8000/api/login"
     private registerUrl = "http://127.0.0.1:8000/api/register"
+    private profileSubject = new BehaviorSubject<User | null>(null);
+    profile$ = this.profileSubject.asObservable();
     constructor(private http : HttpClient){}
 
 
     logout(){
       localStorage.removeItem('access');
       localStorage.removeItem('refresh');
+      this.clearProfile();
     }
     login(username: string , password:string){
       return this.http.post<Auth>(`${this.logUrl}/` ,{
@@ -23,7 +28,7 @@ export class AuthService {
         tap(res => {
           localStorage.setItem('access' , res.access);
           localStorage.setItem('refresh' , res.refresh);
-        })
+        }),
       )
     }
     register(username : string , first_name: string , last_name : string , email : string , password : string){
@@ -52,5 +57,14 @@ export class AuthService {
     }
     getToken() : string | null{
       return localStorage.getItem('access');
+    }
+    getProfile(){
+      console.log("i'm in getProfile")
+      return this.http.get<User>(`http://127.0.0.1:8000/api/profile/`).pipe(
+        tap(profile => this.profileSubject.next(profile))
+      );
+    }
+    clearProfile(){
+      this.profileSubject.next(null);
     }
 }

@@ -56,6 +56,14 @@ export class LoginComponent implements OnInit {
       next: (response) => {
         this.isLoading = false;
         console.log(response);
+        this.auth.getProfile().subscribe({
+          next: (response) =>{
+            console.log(response);
+          },
+          error : (err) =>{
+            console.log(err);
+          }
+        })
         this.router.navigate(['/main']);
       },
       error: (err) => {
