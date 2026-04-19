@@ -14,7 +14,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\r\n    \"username\": \"new_student\",\r\n    \"password\": \"securepassword123\"\r\n}",
+          "raw": "{\r\n    \"username\": \"admin\",\r\n    \"password\": \"mimimax1423\"\r\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -474,6 +474,216 @@
             "api",
             "profile",
             ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "15. Get Service by Category",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/services/?category=1",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "services",
+            ""
+          ],
+          "query": [
+            {
+              "key": "category",
+              "value": "1"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "16. Get Service by Author",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/services/?author=2",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "services",
+            ""
+          ],
+          "query": [
+            {
+              "key": "author",
+              "value": "2"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "17. Serching by Service",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/services/?search=препод",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "services",
+            ""
+          ],
+          "query": [
+            {
+              "key": "search",
+              "value": "препод"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "18. Sorting Services ASC by Price",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/services/?ordering=price",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "services",
+            ""
+          ],
+          "query": [
+            {
+              "key": "ordering",
+              "value": "price"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "19. Sorting Services DESC by Price",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/services/?ordering=-price",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "services",
+            ""
+          ],
+          "query": [
+            {
+              "key": "ordering",
+              "value": "-price"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "20. Filtering Orders by Status",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/orders/?status=pending",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "orders",
+            ""
+          ],
+          "query": [
+            {
+              "key": "status",
+              "value": "pending"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "20. Filtering Orders by ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/orders/?service=3",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "orders",
+            ""
+          ],
+          "query": [
+            {
+              "key": "service",
+              "value": "3"
+            }
           ]
         }
       },
