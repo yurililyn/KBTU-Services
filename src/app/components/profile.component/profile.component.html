@@ -56,12 +56,14 @@
 
 <!-- TAB 3: ORDERS RECEIVED -->
 <div class="tab-content" *ngIf="activeTab === 'orders'">
-    <ng-container *ngIf="orders.length <= 0">
-  <div class="empty-state">
-    <span class="empty-icon">📭</span>
-    <p>You don't have any orders yet</p>
-  </div>
-</ng-container>
+    <ng-container *ngIf="requestedOrders.length <= 0">
+      <div class="empty-state">
+        <span class="empty-icon">📭</span>
+        <p>You don't have any orders yet</p>
+      </div>
+    </ng-container>
+    <app-ordercard *ngFor="let order of requestedOrders" [order]="order"
+                    ></app-ordercard>
 </div>
 
 

@@ -209,3 +209,11 @@ h3 {
   border-bottom-color: #1dbf73;
   color: #0f172a;
 }
+
+
+.filters {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 24px;
+  align-items: center;
+}

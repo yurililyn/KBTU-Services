@@ -39,7 +39,7 @@ export class ProfileComponent implements OnInit {
     this.auth.getProfile().pipe(
       switchMap(user => forkJoin({
         services: this.serpostService.getByAuthor(user.id),
-        orders: this.ordService.getAll(),
+        orders: this.ordService.getByAuthor(user.id),
         requestedOrders: this.ordService.getRequested(user.id)
       }))
     ).subscribe(result => {
