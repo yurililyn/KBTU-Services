@@ -9,13 +9,17 @@ from .serializers import RegisterSerializer
 from .serializers import UserProfileSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
+from django.shortcuts import get_object_or_404
+from rest_framework.views import APIView
 
-from .models import Category, ServicePost, Order
+
+from .models import Category, ServicePost, Order, Review
 from .serializers import (
     LoginSerializer, 
     OrderCreateSerializer,
     CategorySerializer, 
-    ServicePostSerializer
+    ServicePostSerializer,
+    ReviewSerializer
 )
 
 # ==========================================
@@ -108,13 +112,6 @@ class OrderListCreateView(generics.ListCreateAPIView):
     ordering_fields = ['created_at']
 
     def perform_create(self, serializer):
-        if self.request.user.is_authenticated:
-            customer = self.request.user
-        else:
-            customer = User.objects.first() 
-        serializer.save(customer=customer)
-
-    def perform_create(self, serializer):
         """
         Сохраняем тот самый "костыль" для фронтендера при POST-запросе:
         Если есть токен - берем юзера. Если нет - вешаем заказ на админа.
@@ -136,3 +133,32 @@ class OrderDetailView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Order.objects.all()
     serializer_class = OrderCreateSerializer
     permission_classes = [AllowAny] # Временный доступ без токена
+
+
+# ==========================================
+# ДОБАВЛЕНИЕ/ОБНОВЛЕНИЕ ОТЗЫВА
+# ==========================================
+class ReviewCreateUpdateView(APIView):
+    """
+    Эндпоинт: POST /api/services/<id>/review/
+    """
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, pk):
+        service = get_object_or_404(ServicePost, pk=pk)
+        
+        # Ищем, оставлял ли этот юзер уже отзыв
+        review = Review.objects.filter(user=request.user, service=service).first()
+        
+        if review:
+            # Если отзыв есть -> ОБНОВЛЯЕМ (передаем instance=review)
+            serializer = ReviewSerializer(review, data=request.data, partial=True)
+        else:
+            # Если отзыва нет -> СОЗДАЕМ НОВЫЙ
+            serializer = ReviewSerializer(data=request.data)
+            
+        if serializer.is_valid():
+            serializer.save(user=request.user, service=service)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+            
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

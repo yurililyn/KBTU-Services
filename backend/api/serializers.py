@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from .models import Category, ServicePost, Order
+from .models import Category, ServicePost, Order, Review
 
 # ==========================================
 # РЕГИСТРАЦИЯ
@@ -47,13 +47,25 @@ class LoginSerializer(serializers.Serializer):
 
 # 2. Для создания отклика/заказа
 class OrderCreateSerializer(serializers.ModelSerializer):
+    customer_username = serializers.ReadOnlyField(source='customer.username')
+    service_title = serializers.ReadOnlyField(source='service.title')
+
     class Meta:
         model = Order
-        fields = ['id', 'service', 'message', 'status']
-        read_only_fields = ['status'] # Статус нельзя менять просто так
+        fields = [
+            'id', 
+            'customer', 
+            'customer_username', 
+            'service', 
+            'service_title', 
+            'message', 
+            'status', 
+            'created_at'
+        ]
+        read_only_fields = ['customer', 'created_at']
 
 # ==========================================
-# 2 MODEL SERIALIZER
+# 3 MODEL SERIALIZER
 # ==========================================
 
 # 1. Для Категорий
@@ -71,6 +83,15 @@ class ServicePostSerializer(serializers.ModelSerializer):
     class Meta:
         model = ServicePost
         fields = ['id', 'title', 'description', 'price', 'created_at', 
-                  'author', 'author_username', 'category', 'category_name']
-        # Поле author заполняется автоматически на бэкенде, защищаем его от ручного ввода
-        read_only_fields = ['author']
+                  'author', 'author_username', 'category', 'category_name',
+                  'average_rating', 'total_votes']
+        read_only_fields = ['author', 'average_rating', 'total_votes']
+
+# 3. Cериализатор для отзывов
+class ReviewSerializer(serializers.ModelSerializer):
+    username = serializers.ReadOnlyField(source='user.username')
+
+    class Meta:
+        model = Review
+        fields = ['id', 'user', 'username', 'score', 'text', 'created_at']
+        read_only_fields = ['user'] # Юзер берется из токена автоматически

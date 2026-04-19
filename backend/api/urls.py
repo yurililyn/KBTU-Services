@@ -9,4 +9,5 @@ urlpatterns = [
     path('categories/', views.CategoryListView.as_view(), name='api_categories'),
     path('services/', views.ServicePostListCreateView.as_view(), name='api_services'),
     path('services/<int:pk>/', views.ServicePostDetailView.as_view(), name='api_service_detail'),
+    path('services/<int:pk>/review/', views.ReviewCreateUpdateView.as_view(), name='service_review'),
 ]
