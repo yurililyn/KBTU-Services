@@ -15,7 +15,8 @@ from .serializers import (
     ServicePostSerializer, 
     OrderSerializer, 
     ReviewSerializer,
-    LoginSerializer
+    LoginSerializer,
+    ChangePasswordSerializer
 )
 
 # --- РЕГИСТРАЦИЯ И ПРОФИЛЬ ---
@@ -24,7 +25,7 @@ class RegisterView(generics.CreateAPIView):
     serializer_class = RegisterSerializer
     permission_classes = [AllowAny]
 
-class UserProfileView(generics.RetrieveAPIView):
+class UserProfileView(generics.RetrieveUpdateAPIView):
     serializer_class = UserProfileSerializer
     permission_classes = [IsAuthenticated]
     def get_object(self):
@@ -141,4 +142,34 @@ class ReviewCreateUpdateView(APIView):
             serializer.save(user=request.user, service=service)
             return Response(serializer.data, status=status.HTTP_200_OK)
             
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+class ChangePasswordView(generics.UpdateAPIView):
+    serializer_class = ChangePasswordSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_object(self):
+        return self.request.user
+
+    def update(self, request, *args, **kwargs):
+        user = self.get_object()
+        serializer = self.get_serializer(data=request.data)
+
+        if serializer.is_valid():
+            # Проверяем, правильный ли старый пароль
+            if not user.check_password(serializer.data.get("old_password")):
+                return Response(
+                    {"old_password": ["Неверный текущий пароль."]}, 
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+            
+            # Устанавливаем новый пароль (set_password автоматически его хэширует)
+            user.set_password(serializer.data.get("new_password"))
+            user.save()
+            
+            return Response(
+                {"detail": "Пароль успешно изменен."}, 
+                status=status.HTTP_200_OK
+            )
+
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
