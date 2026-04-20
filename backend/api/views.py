@@ -32,6 +32,11 @@ class UserProfileView(generics.RetrieveUpdateAPIView):
     def get_object(self):
         return self.request.user
 
+class PublicProfileView(generics.RetrieveAPIView):
+    permission_classes = [AllowAny] 
+    queryset = User.objects.all()
+    serializer_class = UserProfileSerializer
+
 # --- КАТЕГОРИИ ---
 class CategoryListView(generics.ListAPIView):
     queryset = Category.objects.all()
