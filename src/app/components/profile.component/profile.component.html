@@ -6,17 +6,29 @@
     <div class="profile-header">
         <div class="cover-image"></div>
         <div *ngIf="profile$ | async as profile" class="profile-info">
-            <div class="avatar">👨‍🎓</div>
-            <h1 class="animate-title">{{profile.username}}</h1>
-            <p class="student-id animate-fade">ID: {{profile.id}}</p>
-            <p class="student-bio animate-fade">{{profile.first_name}} {{profile.last_name}}</p>
-            <div class="stats">
-                <div class="stat">
-                    <span class="stat-value">{{getAverageRating()}}</span>
-                    <span class="stat-label">Rating</span>
-                </div>
-            </div>
-        </div>
+          <ng-container *ngIf="profile.avatar; else initialsAvatar">
+            <img class="avatar avatar-img" [src]="profile.avatar" alt="avatar" />
+          </ng-container>
+          <ng-template #initialsAvatar>
+            <div class="avatar avatar-initials">{{ getInitials(profile) }}</div>
+          </ng-template>
+
+          <h1 class="animate-title">{{profile.username}}</h1>
+          <p class="student-id animate-fade">ID: {{profile.id}}</p>
+          <p class="student-bio animate-fade">{{profile.first_name}} {{profile.last_name}}</p>
+
+          <!-- КНОПКА НАСТРОЕК -->
+          <button class="settings-btn" (click)="openSettings(profile)">
+            ⚙️ Edit Profile
+          </button>
+
+          <div class="stats">
+              <div class="stat">
+                  <span class="stat-value">{{getAverageRating()}}</span>
+                  <span class="stat-label">Rating</span>
+              </div>
+          </div>
+      </div>
     </div>
 
     <!-- TABS -->
@@ -142,6 +154,88 @@
       <button class="cancel-btn" (click)="closeReviewPopup()">Отмена</button>
       <button class="submit-btn" (click)="onSubmitReview()" [disabled]="isSubmittingReview">
         {{ isSubmittingReview ? 'Отправка...' : 'Опубликовать' }}
+      </button>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+<!-- SETTINGS POPUP -->
+<div class="create-popup-overlay" *ngIf="showSettingsPopup" (click)="closeSettings()">
+  <div class="create-popup-content popup-animate" (click)="$event.stopPropagation()">
+    <div class="popup-header">
+      <h2>⚙️ Edit Profile</h2>
+      <button class="close-popup" (click)="closeSettings()">×</button>
+    </div>
+    <div class="popup-body">
+      <div class="form-group">
+        <label>First Name</label>
+        <input class="popup-input" type="text" [(ngModel)]="settingsData.first_name" placeholder="John" />
+      </div>
+      <div class="form-group">
+        <label>Last Name</label>
+        <input class="popup-input" type="text" [(ngModel)]="settingsData.last_name" placeholder="Doe" />
+      </div>
+      <div class="form-group">
+        <label>Phone</label>
+        <input class="popup-input" type="text" [(ngModel)]="settingsData.phone" placeholder="+7 777 000 00 00" />
+      </div>
+      <div class="form-group">
+        <label>Telegram</label>
+        <input class="popup-input" type="text" [(ngModel)]="settingsData.telegram" placeholder="@username" />
+      </div>
+      <div class="form-group">
+        <label>Avatar</label>
+        <input type="file" accept="image/*" class="popup-input" 
+              (change)="onAvatarSelected($event)" />
+        <p style="font-size:12px; color:#94a3b8; margin-top:6px;">
+          Supported: JPG, PNG, WebP
+        </p>
+      </div>
+      <!-- Username -->
+    <div class="form-group">
+      <label>Username</label>
+      <input class="popup-input" type="text" [(ngModel)]="settingsData.username"
+            (input)="onUsernameInput(settingsData.username)" />
+      <p *ngIf="usernameStatus === 'checking'" style="font-size:12px; color:#94a3b8; margin-top:4px;">
+        Checking...
+      </p>
+      <p *ngIf="usernameStatus === 'available'" style="font-size:12px; color:#1dbf73; margin-top:4px;">
+        ✓ Available
+      </p>
+      <p *ngIf="usernameStatus === 'taken'" style="font-size:12px; color:#ef4444; margin-top:4px;">
+        ✗ Already taken
+      </p>
+    </div>
+
+    <!-- Divider -->
+    <div style="border-top: 1px solid #f1f5f9; margin: 8px 0 20px;"></div>
+    <p style="font-size:13px; font-weight:600; color:#475569; margin-bottom:16px;">Change Password</p>
+
+    <div class="form-group">
+      <label>Current Password</label>
+      <input class="popup-input" type="password" [(ngModel)]="settingsData.old_password"
+            placeholder="Enter current password" />
+    </div>
+    <div class="form-group">
+      <label>New Password</label>
+      <input class="popup-input" type="password" [(ngModel)]="settingsData.new_password"
+            placeholder="Min 8 characters" />
+    </div>
+    <div class="form-group">
+      <label>Confirm New Password</label>
+      <input class="popup-input" type="password" [(ngModel)]="settingsData.confirm_password"
+            placeholder="Repeat new password" />
+    </div>
+    </div>
+    <div class="popup-footer">
+      <button class="cancel-btn" (click)="closeSettings()">Cancel</button>
+      <button class="submit-btn" (click)="saveSettings()" [disabled]="isSavingSettings">
+        {{ isSavingSettings ? 'Saving...' : 'Save Changes' }}
       </button>
     </div>
   </div>

@@ -10,6 +10,9 @@ import { ReviewService } from '../../services/review.service';
 import { Review } from '../../models/review.model';
 import { ReviewcardComponent } from "../reviewcard.component/reviewcard.component";
 import { Location } from '@angular/common';
+import { AuthService } from '../../services/auth.service';
+import { Observable } from 'rxjs';
+import { User } from '../../models/user.model';
 @Component({
   selector: 'app-service-detail',
   standalone: true,
@@ -20,13 +23,12 @@ import { Location } from '@angular/common';
 export class ServicePostMainComponent implements OnInit {
   service = signal<any>(null);
   isLoading = signal(true);
-  
+  currentUser = signal<User | null>(null);
   // Состояние заказа
   showOrderPopup = signal(false);
   orderMessage = signal('');
   isSubmitting = signal(false);
   reviews : Review[] = [];
-  fromMain = input<boolean>(false);
   constructor(
     private route: ActivatedRoute,
     private serviceService: ServicepostService,
@@ -35,8 +37,10 @@ export class ServicePostMainComponent implements OnInit {
     private ordService: OrderService,
     private cdr : ChangeDetectorRef,
     private location : Location,
-    private router: Router
-  ) {}
+    private router: Router,
+    private auth : AuthService
+  ) {
+  }
 
   ngOnInit() {
     const id = Number(this.route.snapshot.paramMap.get('id'));

@@ -195,3 +195,15 @@ class AvatarUploadView(APIView):
             return Response({"avatar_url": profile.avatar.url}, status=200)
         
         return Response({"error": "Файл не найден"}, status=400)
+    
+
+
+class CheckUsernameView(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request):
+        username = request.query_params.get('username', '').strip()
+        if not username:
+            return Response({'available': False})
+        exists = User.objects.filter(username=username).exists()
+        return Response({'available': not exists})

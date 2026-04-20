@@ -17,7 +17,7 @@
 
 <!-- CATEGORIES -->
 <section class="categories-section">
-    <h2>Popular categories</h2>
+    <h2>All categories</h2>
     <div class="categories">
         <div *ngFor="let cat of categories$ | async" (click)="onCategory(cat.id)">
             <div class="cat">{{cat.name}}</div>
@@ -33,7 +33,7 @@
     </div>
 
     <div class="grid">
-        <div *ngFor="let service of services$ | async">
+        <div *ngFor="let service of services$ | async | slice:0:4">
             <div class="card" (click)="goToService(service.id)">
                 <div class="card-content">
                     <div class="badge math">{{service.category_name}}</div>

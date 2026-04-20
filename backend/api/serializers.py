@@ -57,8 +57,6 @@ class OrderSerializer(serializers.ModelSerializer):
 
 class UserProfileSerializer(serializers.ModelSerializer):
     avatar = serializers.ImageField(source='profile.avatar', read_only=True)
-    
-    # Разрешаем фронтенду присылать эти поля
     phone = serializers.CharField(source='profile.phone', required=False, allow_blank=True, allow_null=True)
     telegram = serializers.CharField(source='profile.telegram', required=False, allow_blank=True, allow_null=True)
 
@@ -67,24 +65,20 @@ class UserProfileSerializer(serializers.ModelSerializer):
         fields = ['id', 'username', 'email', 'first_name', 'last_name', 'avatar', 'phone', 'telegram']
 
     def update(self, instance, validated_data):
-        # DRF прячет данные для профиля в отдельный словарь из-за source='profile.x'
         profile_data = validated_data.pop('profile', {})
-        print(f"DEBUG: Данные для профиля: {profile_data}") # Увидишь это в терминале Django
 
-        # Обновляем имя/фамилию/почту
+        # Добавь username сюда
+        instance.username = validated_data.get('username', instance.username)
         instance.first_name = validated_data.get('first_name', instance.first_name)
         instance.last_name = validated_data.get('last_name', instance.last_name)
         instance.email = validated_data.get('email', instance.email)
         instance.save()
 
-        # Обновляем или создаем профиль
         profile, created = Profile.objects.get_or_create(user=instance)
-        
         if 'phone' in profile_data:
             profile.phone = profile_data['phone']
         if 'telegram' in profile_data:
             profile.telegram = profile_data['telegram']
-            
         profile.save()
         return instance
 

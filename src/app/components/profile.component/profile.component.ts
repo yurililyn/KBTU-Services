@@ -16,6 +16,9 @@ import { CategoryService } from '../../services/category.service';
 import { FormsModule } from '@angular/forms';
 import { OrdercardrequestedComponent } from '../ordercardrequested.component/ordercardrequested.component';
 import { ReviewService } from '../../services/review.service';
+import { of } from 'rxjs';
+import { Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged } from 'rxjs';
 @Component({
   selector: 'app-profile',
   imports: [OrdercardrequestedComponent,  CommonModule, ServicepostcardComponent, OrdercardComponent, FormsModule],
@@ -24,7 +27,7 @@ import { ReviewService } from '../../services/review.service';
 })
 export class ProfileComponent implements OnInit {
   profile$: Observable<User | null>;
-  activeTab: string = 'requests';
+  activeTab: string = 'services';
   services : ServicePost[] = [];
   orders: Order[] = [];
   requestedOrders: Order[] = [];
@@ -37,6 +40,16 @@ export class ProfileComponent implements OnInit {
   selectedOrderForReview: Order | null = null;
   reviewData = { score: 5, text: '' };
   reviewMessage = { text: '', type: '' };
+  showSettingsPopup = false;
+  settingsData = { 
+    first_name: '', last_name: '', phone: '', telegram: '',
+    username: '',
+    old_password: '', new_password: '', confirm_password: ''
+  };
+  isSavingSettings = false;
+  selectedAvatarFile: File | null = null;
+  usernameStatus: 'idle' | 'checking' | 'available' | 'taken' = 'idle';
+  private usernameCheck$ = new Subject<string>();
   constructor(private auth: AuthService , private serpostService : ServicepostService,
     private ordService : OrderService, private cdr: ChangeDetectorRef, private categoryService : CategoryService,
     private revService: ReviewService
@@ -60,8 +73,28 @@ export class ProfileComponent implements OnInit {
     this.categoryService.getAll().subscribe(cats => {
     this.categories = cats;
     this.cdr.detectChanges();
-});
+    });
+    this.usernameCheck$.pipe(
+    debounceTime(500),
+    distinctUntilChanged(),
+    switchMap(username => {
+      if (!username || username.length < 3) {
+        this.usernameStatus = 'idle';
+        return [];
+      }
+      this.usernameStatus = 'checking';
+      return this.auth.checkUsername(username);
+    })
+    ).subscribe({
+    next: (res: any) => {
+      this.usernameStatus = res.available ? 'available' : 'taken';
+      this.cdr.detectChanges();
+    }
+    });
 }
+  onUsernameInput(value: string) {
+    this.usernameCheck$.next(value);
+  }
 
 
   getAverageRating(): number {
@@ -188,5 +221,97 @@ export class ProfileComponent implements OnInit {
         this.cdr.detectChanges();
       }
     });
+  }
+
+
+
+
+  openSettings(profile: User) {
+    this.settingsData = {
+      first_name: profile.first_name || '',
+      last_name: profile.last_name || '',
+      phone: profile.phone || '',
+      telegram: profile.telegram || '',
+      username: profile.username || '',
+      old_password: '', new_password: '', confirm_password: ''
+    };
+    this.usernameStatus = 'idle';
+    this.showSettingsPopup = true;
+  }
+
+  closeSettings() {
+    this.showSettingsPopup = false;
+  }
+
+
+
+  onAvatarSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files?.length) {
+      this.selectedAvatarFile = input.files[0];
+    }
+  }
+
+  saveSettings() {
+    if (this.isSavingSettings) return;
+    if (this.settingsData.new_password) {
+      if (this.settingsData.new_password !== this.settingsData.confirm_password) {
+        alert('Passwords do not match');
+        return;
+      }
+      if (!this.settingsData.old_password) {
+        alert('Enter current password');
+        return;
+      }
+    }
+    if (this.usernameStatus === 'taken') {
+      alert('Username is already taken');
+      return;
+    }
+
+    this.isSavingSettings = true;
+
+    const updateProfile$ = this.auth.updateProfile({
+      first_name: this.settingsData.first_name,
+      last_name: this.settingsData.last_name,
+      phone: this.settingsData.phone,
+      telegram: this.settingsData.telegram,
+      username: this.settingsData.username
+    });
+
+    const uploadAvatar$ = this.selectedAvatarFile
+      ? this.auth.uploadAvatar(this.selectedAvatarFile)
+      : of(null);
+
+    const changePassword$ = this.settingsData.old_password && this.settingsData.new_password
+      ? this.auth.changePassword(this.settingsData.old_password, this.settingsData.new_password)
+      : of(null);
+
+    updateProfile$.pipe(
+      switchMap(() => uploadAvatar$),
+      switchMap(() => changePassword$)
+    ).subscribe({
+      next: () => {
+        this.isSavingSettings = false;
+        this.selectedAvatarFile = null;
+        this.auth.getProfile().subscribe();
+        this.closeSettings();
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        this.isSavingSettings = false;
+        alert(err.error?.detail || err.error?.old_password?.[0] || 'Error saving');
+        this.cdr.detectChanges();
+      }
+    });
+  }
+  getInitials(profile: User): string {
+    if (profile.first_name && profile.last_name) {
+      return (profile.first_name[0] + profile.last_name[0]).toUpperCase();
+    }
+    if (profile.username) {
+      return profile.username[0].toUpperCase();
+    }
+    return '?';
   }
 }
