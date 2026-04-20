@@ -6,7 +6,12 @@
     <div class="bottom">
       <span class="price">{{ service().price }}$</span>
       <div class="actions">
-        <span class="rating">⭐ {{ service().average_rating }}</span>
+        <div class="rating-container" title="Средний рейтинг (кол-во отзывов)">
+          <span class="star-icon">★</span>
+          <span class="rating-value">{{ service().average_rating }}</span>
+          <span class="votes-count">({{ service().total_votes }})</span>
+        </div>
+         
         <button class="edit-btn" (click)="openEdit()">✏️ Edit</button>
         <button class="delete-btn" (click)="onDelete()">🗑️ Delete</button>
       </div>

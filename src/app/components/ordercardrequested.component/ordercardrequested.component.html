@@ -1,0 +1,60 @@
+<div class="order-card">
+  <div class="order-top">
+    <div class="order-title-group">
+      <h4>{{ order().service_title }}</h4>
+      <span class="order-id">#{{ order().id }}</span>
+    </div>
+    <span class="order-status" [ngClass]="order().status">{{ order().status }}</span>
+  </div>
+
+  <div class="order-divider"></div>
+
+  <div class="order-customer">
+    <div class="customer-info">
+      <span class="customer-label">From</span>
+      <span class="customer-name">{{ order().customer_username }}</span>
+    </div>
+  </div>
+
+  <p class="order-message">{{ order().message }}</p>
+
+  <div class="order-meta">
+    <span class="meta-item">
+      <svg width="13" height="13" viewBox="0 0 16 16" fill="none">
+        <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M8 4.5v4l2.5 1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      {{ order().created_at | date:'dd MMM yyyy, HH:mm' }}
+    </span>
+  </div>
+
+  <div class="order-footer">
+    <button class="status-btn" (click)="openPopup()">Change status</button>
+  </div>
+</div>
+
+<!-- POPUP -->
+<div class="popup-overlay" *ngIf="showStatusPopup" (click)="closePopup()">
+  <div class="popup" (click)="$event.stopPropagation()">
+    <div class="popup-header">
+      <span>Change status</span>
+      <button class="popup-close" (click)="closePopup()">×</button>
+    </div>
+    <div class="popup-body">
+      <div class="status-options">
+        <label
+          *ngFor="let s of statusOptions"
+          class="status-option"
+          [class.selected]="selectedStatus === s"
+          (click)="selectedStatus = s">
+          <span class="status-dot" [ngClass]="s"></span>
+          {{ s }}
+        </label>
+      </div>
+    </div>
+    <div class="popup-footer">
+      <button class="cancel-btn" (click)="closePopup()">Cancel</button>
+      <button class="apply-btn" (click)="applyStatus()">Apply</button>
+    </div>
+  </div>
+</div>

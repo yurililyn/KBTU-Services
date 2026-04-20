@@ -882,3 +882,8 @@ body {
   font-weight: 500;
   color: #64748b;
 }
+
+.submit-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}

@@ -1,23 +1,28 @@
 <div class="order-card">
-    <div class="order-header">
-        <div class="order-info">
-            <h4>{{ order().service_title }}</h4>
-            <span class="order-status" [class]="'order-status ' + order().status">{{ order().status }}</span>
-        </div>
+  <div class="order-top">
+    <div class="order-title-group">
+      <h4>{{ order().service_title }}</h4>
+      <span class="order-id">#{{ order().id }}</span>
     </div>
-
-    <div class="order-details">
-        <div class="detail-item">
-            <span class="detail-label">💬</span>
-            <span class="detail-value">{{ order().message }}</span>
-        </div>
-        <div class="detail-item">
-            <span class="detail-label">📅</span>
-            <span class="detail-value">{{ order().created_at | date:'dd MMM yyyy, HH:mm' }}</span>
-        </div>
+    <span class="order-status" [ngClass]="order().status">{{ order().status }}</span>
+  </div>
+  <div class="order-divider"></div>
+  <p class="order-message">{{ order().message }}</p>
+  <div class="order-meta">
+    <span class="meta-item">
+      <svg width="13" height="13" viewBox="0 0 16 16" fill="none">
+        <circle cx="8" cy="8" r="7" stroke="currentColor" stroke-width="1.5"/>
+        <path d="M8 4.5v4l2.5 1.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+      {{ order().created_at | date:'dd MMM yyyy, HH:mm' }}
+    </span>
+  </div>
+  <div class="order-footer">
+    <div class="actions-group">
+      <button *ngIf="order().status === 'completed'" class="review-btn" (click)="onReview()">
+        Leave Review
+      </button>
+      <button class="delete-btn" (click)="onDelete()">Delete</button>
     </div>
-
-    <div class="order-actions">
-        <button class="delete-btn" (click)="onDelete()">🗑️ Delete</button>
-    </div>
+  </div>
 </div>

@@ -26,4 +26,7 @@ export class OrderService {
   delete(id: number){
     return this.http.delete(`${this.apiUrl}/${id}/`);
   }
+  updateStatus(id: number, status: string): Observable<Order> {
+    return this.http.patch<Order>(`${this.apiUrl}/${id}/`, { status });
+  }
 }

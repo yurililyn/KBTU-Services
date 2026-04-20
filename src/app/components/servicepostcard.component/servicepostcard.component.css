@@ -217,3 +217,48 @@ h3 {
 .save-btn:hover {
   background: #17a864;
 }
+
+.textFroReviews{
+  font-size:8px;
+}
+
+
+/* Контейнер для рейтинга - минималистичный и аккуратный */
+.rating-container {
+  display: flex;
+  align-items: center;
+  gap: 4px; /* Отступ между элементами */
+  padding: 5px 12px;
+  background-color: #fafafa; /* Почти белый фон */
+  border: 1px solid #f0f0f0; /* Тонкая серая граница */
+  border-radius: 100px; /* Полностью круглые края */
+  transition: all 0.2s ease;
+}
+
+/* Эффект при наведении на карточку - легкое выделение рейтинга */
+.card:hover .rating-container {
+  background-color: #fefce8; /* Очень светлый желтый при наведении */
+  border-color: #fef08a;
+}
+
+/* Стили для самой иконки звезды */
+.star-icon {
+  color: #f59e0b; /* Насыщенный золотой цвет */
+  font-size: 15px; /* Чуть больше текста */
+  line-height: 1;
+  margin-top: -1px; /* Визуальное выравнивание */
+}
+
+/* Стили для числового значения рейтинга (например, 4.8) */
+.rating-value {
+  font-size: 14px;
+  font-weight: 700; /* Жирный шрифт для акцента */
+  color: #1e293b; /* Тёмно-серый, почти чёрный */
+}
+
+/* Стили для количества отзывов в скобках (например, (12)) */
+.votes-count {
+  font-size: 12px;
+  font-weight: 400;
+  color: #94a3b8; /* Светло-серый цвет, чтобы не отвлекать */
+}

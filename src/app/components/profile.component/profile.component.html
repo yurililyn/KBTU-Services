@@ -51,7 +51,8 @@
   </div>
 </ng-container>
     <app-ordercard *ngFor="let order of orders" [order]="order"
-                    (deleted)="onOrderDelete($event)"></app-ordercard>
+                    (deleted)="onOrderDelete($event)"
+                    (reviewRequested)="openReviewPopup($event)"></app-ordercard>
 </div>
 
 <!-- TAB 3: ORDERS RECEIVED -->
@@ -62,8 +63,9 @@
         <p>You don't have any orders yet</p>
       </div>
     </ng-container>
-    <app-ordercard *ngFor="let order of requestedOrders" [order]="order"
-                    ></app-ordercard>
+    <app-ordercardrequested *ngFor="let order of requestedOrders" [order]="order"
+    (statusChanged) = "onStatusChanged($event)"
+                    ></app-ordercardrequested>
 </div>
 
 
@@ -98,7 +100,49 @@
     </div>
     <div class="popup-footer">
       <button class="cancel-btn" (click)="closeCreatePopup()">Cancel</button>
-      <button class="submit-btn" (click)="onServiceCreate()">Publish →</button>
+      <button class="submit-btn" (click)="onServiceCreate()" [disabled]="isCreating">
+        {{ isCreating ? 'Publishing...' : 'Publish →' }}
+      </button>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+<!--  REVIEW POP UP -->
+<div class="create-popup-overlay" *ngIf="showReviewPopup" (click)="closeReviewPopup()">
+  <div class="create-popup-content popup-animate" (click)="$event.stopPropagation()">
+    <div class="popup-header">
+      <h2>⭐ Оставить отзыв</h2>
+      <button class="close-popup" (click)="closeReviewPopup()">×</button>
+    </div>
+    
+    <div class="popup-body">
+      <div *ngIf="reviewMessage.text" 
+           [ngStyle]="{'background': reviewMessage.type === 'error' ? '#fee2e2' : '#dcfce7', 
+                       'color': reviewMessage.type === 'error' ? '#ef4444' : '#16a34a',
+                       'padding': '10px', 'border-radius': '8px', 'margin-bottom': '15px', 'font-size': '14px'}">
+        {{ reviewMessage.text }}
+      </div>
+
+      <div class="form-group">
+        <label>Оценка (1-5)</label>
+        <input class="popup-input" type="number" min="1" max="5" [(ngModel)]="reviewData.score" placeholder="5" />
+      </div>
+      
+      <div class="form-group">
+        <label>Комментарий (необязательно)</label>
+        <textarea class="popup-textarea" [(ngModel)]="reviewData.text" rows="4" placeholder="Расскажите о ваших впечатлениях..."></textarea>
+      </div>
+    </div>
+    
+    <div class="popup-footer">
+      <button class="cancel-btn" (click)="closeReviewPopup()">Отмена</button>
+      <button class="submit-btn" (click)="onSubmitReview()" [disabled]="isSubmittingReview">
+        {{ isSubmittingReview ? 'Отправка...' : 'Опубликовать' }}
+      </button>
     </div>
   </div>
 </div>

@@ -14,9 +14,11 @@ import { ChangeDetectorRef } from '@angular/core';
 import { Category } from '../../models/category.model';
 import { CategoryService } from '../../services/category.service';
 import { FormsModule } from '@angular/forms';
+import { OrdercardrequestedComponent } from '../ordercardrequested.component/ordercardrequested.component';
+import { ReviewService } from '../../services/review.service';
 @Component({
   selector: 'app-profile',
-  imports: [CommonModule, ServicepostcardComponent, OrdercardComponent, FormsModule],
+  imports: [OrdercardrequestedComponent,  CommonModule, ServicepostcardComponent, OrdercardComponent, FormsModule],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css',
 })
@@ -29,8 +31,15 @@ export class ProfileComponent implements OnInit {
   categories: Category[] = [];
   showCreatePopup = false;
   newService = { title: '', description: '', price: 0, category: null as number | null };
+  isCreating = false;
+  showReviewPopup = false;
+  isSubmittingReview = false;
+  selectedOrderForReview: Order | null = null;
+  reviewData = { score: 5, text: '' };
+  reviewMessage = { text: '', type: '' };
   constructor(private auth: AuthService , private serpostService : ServicepostService,
-    private ordService : OrderService, private cdr: ChangeDetectorRef, private categoryService : CategoryService
+    private ordService : OrderService, private cdr: ChangeDetectorRef, private categoryService : CategoryService,
+    private revService: ReviewService
   ) {
     this.profile$ = this.auth.profile$;
   }
@@ -100,10 +109,81 @@ export class ProfileComponent implements OnInit {
 
   onServiceCreate() {
     if (!this.newService.title || !this.newService.price || !this.newService.category) return;
-    this.serpostService.create(this.newService).subscribe(created => {
-      this.services = [created, ...this.services];
-      this.showCreatePopup = false;
-      this.cdr.detectChanges();
+    if (this.isCreating) return;
+    
+    this.isCreating = true;
+    this.serpostService.create(this.newService).subscribe({
+      next: (created) => {
+        this.services = [created, ...this.services];
+        this.showCreatePopup = false;
+        this.isCreating = false;
+        this.cdr.detectChanges();
+      },
+      error: () => {
+        this.isCreating = false;
+        this.cdr.detectChanges();
+      }
+  });
+}
+  onStatusChanged(event: any) {
+    this.ordService.updateStatus(event.id, event.status).subscribe((updated: any) => {
+    this.requestedOrders = this.requestedOrders.map(o => o.id === updated.id ? updated : o);
+    this.cdr.detectChanges();
+    });
+  }
+  openReviewPopup(order: Order) {
+    this.selectedOrderForReview = order;
+    this.reviewData = { score: 5, text: '' }; // Сброс формы
+    this.reviewMessage = { text: '', type: '' }; // Сброс сообщений
+    this.showReviewPopup = true;
+    this.cdr.detectChanges();
+  }
+
+  closeReviewPopup() {
+    this.showReviewPopup = false;
+    this.selectedOrderForReview = null;
+  }
+
+  onSubmitReview() {
+    if (!this.selectedOrderForReview) return;
+    
+    // Валидация оценки
+    if (this.reviewData.score < 1 || this.reviewData.score > 5) {
+      this.reviewMessage = { text: 'Оценка должна быть от 1 до 5', type: 'error' };
+      return;
+    }
+
+    this.isSubmittingReview = true;
+    this.reviewMessage = { text: '', type: '' };
+
+    // Предполагается, что в Order есть ID услуги (например, order.service)
+    // Замени `this.selectedOrderForReview.service` на правильное поле из твоей модели
+    const serviceId = (this.selectedOrderForReview as Order).service;
+    const orderId = (this.selectedOrderForReview as Order).id;
+    // Вызов сервиса (замени на свой)
+    this.revService.submitReview(serviceId, this.reviewData).subscribe({
+      next: () => {
+        this.isSubmittingReview = false;
+        this.reviewMessage = { text: 'Отзыв успешно сохранен!', type: 'success' };
+        this.cdr.detectChanges();
+        setTimeout(() => 1000);
+        this.closeReviewPopup();
+        this.ordService.delete(orderId).subscribe(() =>{
+          this.orders = this.orders.filter(s=>s.id != orderId);
+          this.cdr.detectChanges();
+        })
+        this.cdr.detectChanges();
+      },
+      error: (err) => {
+        this.isSubmittingReview = false;
+        console.log(err);
+        // Показываем ошибку от бэкенда (например, если пытается оценить свою услугу)
+        this.reviewMessage = { 
+          text: err.error?.detail || 'Произошла ошибка при отправке.', 
+          type: 'error' 
+        };
+        this.cdr.detectChanges();
+      }
     });
   }
 }
