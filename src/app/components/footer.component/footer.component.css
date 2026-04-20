@@ -6,7 +6,8 @@
 }
 
 .footer-content {
-    display: grid;
+    display: flex;
+    justify-content: space-evenly;
     grid-template-columns: 2fr 1fr 1fr 1fr;
     gap: 40px;
     padding: 50px 60px 30px;
