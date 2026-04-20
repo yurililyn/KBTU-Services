@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from .models import Category, ServicePost, Order, Review
+from .models import Category, ServicePost, Order, Review, Profile
 
 # РЕГИСТРАЦИЯ
 class RegisterSerializer(serializers.ModelSerializer):
@@ -56,9 +56,37 @@ class OrderSerializer(serializers.ModelSerializer):
         return "none"
 
 class UserProfileSerializer(serializers.ModelSerializer):
+    avatar = serializers.ImageField(source='profile.avatar', read_only=True)
+    
+    # Разрешаем фронтенду присылать эти поля
+    phone = serializers.CharField(source='profile.phone', required=False, allow_blank=True, allow_null=True)
+    telegram = serializers.CharField(source='profile.telegram', required=False, allow_blank=True, allow_null=True)
+
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'first_name', 'last_name']
+        fields = ['id', 'username', 'email', 'first_name', 'last_name', 'avatar', 'phone', 'telegram']
+
+    def update(self, instance, validated_data):
+        # DRF прячет данные для профиля в отдельный словарь из-за source='profile.x'
+        profile_data = validated_data.pop('profile', {})
+        print(f"DEBUG: Данные для профиля: {profile_data}") # Увидишь это в терминале Django
+
+        # Обновляем имя/фамилию/почту
+        instance.first_name = validated_data.get('first_name', instance.first_name)
+        instance.last_name = validated_data.get('last_name', instance.last_name)
+        instance.email = validated_data.get('email', instance.email)
+        instance.save()
+
+        # Обновляем или создаем профиль
+        profile, created = Profile.objects.get_or_create(user=instance)
+        
+        if 'phone' in profile_data:
+            profile.phone = profile_data['phone']
+        if 'telegram' in profile_data:
+            profile.telegram = profile_data['telegram']
+            
+        profile.save()
+        return instance
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
@@ -69,11 +97,16 @@ class ServicePostSerializer(serializers.ModelSerializer):
     author_username = serializers.ReadOnlyField(source='author.username')
     category_name = serializers.ReadOnlyField(source='category.name')
 
+    author_email = serializers.ReadOnlyField(source='author.email')
+    author_phone = serializers.ReadOnlyField(source='author.profile.phone')
+    author_telegram = serializers.ReadOnlyField(source='author.profile.telegram')
+
     class Meta:
         model = ServicePost
         fields = ['id', 'title', 'description', 'price', 'created_at', 
                   'author', 'author_username', 'category', 'category_name',
-                  'average_rating', 'total_votes']
+                  'average_rating', 'total_votes',
+                  'author_email', 'author_phone', 'author_telegram']
         read_only_fields = ['author', 'average_rating', 'total_votes']
 
 class ReviewSerializer(serializers.ModelSerializer):
@@ -86,11 +119,3 @@ class ReviewSerializer(serializers.ModelSerializer):
 class ChangePasswordSerializer(serializers.Serializer):
     old_password = serializers.CharField(required=True)
     new_password = serializers.CharField(required=True, min_length=8)
-
-class UserProfileSerializer(serializers.ModelSerializer):
-    # Берем поле из связанной модели Profile
-    avatar = serializers.ImageField(source='profile.avatar', read_only=True)
-
-    class Meta:
-        model = User
-        fields = ['id', 'username', 'email', 'first_name', 'last_name', 'avatar']
