@@ -97,11 +97,15 @@ class OrderDetailView(generics.RetrieveUpdateDestroyAPIView):
 class ReviewCreateUpdateView(APIView):
     permission_classes = [IsAuthenticated]
 
+    def get(self, request, pk):
+        service = get_object_or_404(ServicePost, pk=pk)
+        reviews = Review.objects.filter(service=service).order_by('-created_at')
+        serializer = ReviewSerializer(reviews, many=True)
+        return Response(serializer.data)
+
     def post(self, request, pk):
         service = get_object_or_404(ServicePost, pk=pk)
-        
-        # --- НАЧАЛО НОВЫХ ПРОВЕРОК ---
-        
+                
         # ЗАЩИТА 1: Продавец не может оценивать свою собственную услугу
         if service.author == request.user:
             return Response(
