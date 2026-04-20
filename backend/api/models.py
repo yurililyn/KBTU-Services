@@ -87,3 +87,10 @@ class Review(models.Model):
             self.service.average_rating = 0.0
             self.service.total_votes = 0
         self.service.save()
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
+    avatar = models.ImageField(upload_to='avatars/', null=True, blank=True)
+
+    def __str__(self):
+        return f"Profile for {self.user.username}"

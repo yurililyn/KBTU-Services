@@ -86,3 +86,11 @@ class ReviewSerializer(serializers.ModelSerializer):
 class ChangePasswordSerializer(serializers.Serializer):
     old_password = serializers.CharField(required=True)
     new_password = serializers.CharField(required=True, min_length=8)
+
+class UserProfileSerializer(serializers.ModelSerializer):
+    # Берем поле из связанной модели Profile
+    avatar = serializers.ImageField(source='profile.avatar', read_only=True)
+
+    class Meta:
+        model = User
+        fields = ['id', 'username', 'email', 'first_name', 'last_name', 'avatar']

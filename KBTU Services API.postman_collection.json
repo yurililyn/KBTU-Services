@@ -14,7 +14,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\r\n    \"username\": \"admin\",\r\n    \"password\": \"mimimax1423\"\r\n}",
+          "raw": "{\r\n    \"username\": \"buyer\",\r\n    \"password\": \"password123\"\r\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -71,7 +71,7 @@
         "header": [
           {
             "key": "Authorization",
-            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc2NTI3OTU4LCJpYXQiOjE3NzY1Mjc2NTgsImp0aSI6ImI5ZWMxNzk3Y2QzNDRmMWE5MmIyZjEwNDVlZTg3NWUwIiwidXNlcl9pZCI6IjEifQ.0jxaL6p8xXNXGDx75kb8wtk-I4-Lv73O5mBMNuV3ZYc",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc2NjA4NzI2LCJpYXQiOjE3NzY2MDg0MjYsImp0aSI6IjVjOWMxYzczZWYyODQwODliMzE1M2UyMTQ1MmU4ODQ2IiwidXNlcl9pZCI6IjEifQ.TtXJZNsdciBw3PL0hq9oGVEB0xgHPwgzf7y5CzcP5Mo",
             "type": "text"
           }
         ],
@@ -134,7 +134,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\r\n    \"service\": 2,\r\n    \"message\": \"Привет! Хочу заказать твою помощь по лабам.\"\r\n}",
+          "raw": "{\r\n    \"service\": 3,\r\n    \"message\": \"Привет! Хочу заказать твою помощь по лабам.\"\r\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -168,22 +168,22 @@
           "bearer": [
             {
               "key": "token",
-              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc2NTI5Nzc2LCJpYXQiOjE3NzY1Mjk0NzYsImp0aSI6ImU1YjY4MDJhYzU2OTRiZWY5ZTI0YmNmNzYxMWY5ZDBlIiwidXNlcl9pZCI6IjEifQ.sua_URTRjNBbuqRZzw5usXQ7sVn8-LgPgh10R68gQ5U",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc2NjA4MjYzLCJpYXQiOjE3NzY2MDc5NjMsImp0aSI6IjFkNmY5ZDU1OWE1YjRmYmZiODk2NmIwMWIxMzVkMDYxIiwidXNlcl9pZCI6IjEifQ.ZLGjINF5i_yInTX5_yzwyxG8Bzw_HYMLyfL9Sc1YbvU",
               "type": "string"
             }
           ]
         },
-        "method": "PUT",
+        "method": "PATCH",
         "header": [
           {
             "key": "Authorization",
-            "value": "Bearer: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc2NTI4MzcxLCJpYXQiOjE3NzY1MjgwNzEsImp0aSI6IjhmNTNkNDExYWY4OTRlYTQ5YzY3NTcyN2ZiMzlhYmE4IiwidXNlcl9pZCI6IjEifQ.ZujFHroPiInGi9O5F-LM1qljZnu4az9uZupWrdag7c0",
+            "value": "Bearer: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc2NjA3MjU5LCJpYXQiOjE3NzY2MDY5NTksImp0aSI6IjFlMmY5OGExZmE1OTRhMjg5YzUxMWU0NmY3OTYxZTQ1IiwidXNlcl9pZCI6IjEifQ.ao_cXEFn48RLCo73Kq3pZCKOX9yfrC0DB83iW5MhuoY",
             "type": "text"
           }
         ],
         "body": {
           "mode": "raw",
-          "raw": "{\r\n    \"title\": \"Тестирую создание услуги\",\r\n    \"description\": \"Всё работает, описание добавлено!\",\r\n    \"price\": \"5000.00\",\r\n    \"category\": 3\r\n}",
+          "raw": "{\r\n    \"id\": 2,\r\n    \"title\": \"Репетитор по высшей математике\",\r\n    \"description\": \"Объясню что такое матрицы\",\r\n    \"price\": \"800.00\",\r\n    \"created_at\": \"2026-04-19T14:07:16.215873Z\",\r\n    \"author\": 1,\r\n    \"author_username\": \"admin\",\r\n    \"category\": 1,\r\n    \"category_name\": \"Учеба и Репетиторство\",\r\n    \"average_rating\": 0.0,\r\n    \"total_votes\": 0\r\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -191,7 +191,7 @@
           }
         },
         "url": {
-          "raw": "http://127.0.0.1:8000/api/services/3/",
+          "raw": "http://127.0.0.1:8000/api/services/2/",
           "protocol": "http",
           "host": [
             "127",
@@ -203,7 +203,7 @@
           "path": [
             "api",
             "services",
-            "3",
+            "2",
             ""
           ]
         }
@@ -218,7 +218,7 @@
           "bearer": [
             {
               "key": "token",
-              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc2NTI5Nzc2LCJpYXQiOjE3NzY1Mjk0NzYsImp0aSI6ImU1YjY4MDJhYzU2OTRiZWY5ZTI0YmNmNzYxMWY5ZDBlIiwidXNlcl9pZCI6IjEifQ.sua_URTRjNBbuqRZzw5usXQ7sVn8-LgPgh10R68gQ5U",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc2NjA4MjYzLCJpYXQiOjE3NzY2MDc5NjMsImp0aSI6IjFkNmY5ZDU1OWE1YjRmYmZiODk2NmIwMWIxMzVkMDYxIiwidXNlcl9pZCI6IjEifQ.ZLGjINF5i_yInTX5_yzwyxG8Bzw_HYMLyfL9Sc1YbvU",
               "type": "string"
             }
           ]
@@ -227,7 +227,7 @@
         "header": [
           {
             "key": "Authorization",
-            "value": "Bearer: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc2NTI4NzM5LCJpYXQiOjE3NzY1Mjg0MzksImp0aSI6IjlkZTBhYjBhZjczYjQxMjZhNTM5MWU2NTg3Zjc2ZjZhIiwidXNlcl9pZCI6IjEifQ.7u2JS2Zatpoj0tay7hMi1QDHyRONpQFPu8xkLw2LgsU",
+            "value": "Bearer: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc2NjA4MjYzLCJpYXQiOjE3NzY2MDc5NjMsImp0aSI6IjFkNmY5ZDU1OWE1YjRmYmZiODk2NmIwMWIxMzVkMDYxIiwidXNlcl9pZCI6IjEifQ.ZLGjINF5i_yInTX5_yzwyxG8Bzw_HYMLyfL9Sc1YbvU",
             "type": "text"
           }
         ],
@@ -259,7 +259,7 @@
           "bearer": [
             {
               "key": "token",
-              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc2NTI5Nzc2LCJpYXQiOjE3NzY1Mjk0NzYsImp0aSI6ImU1YjY4MDJhYzU2OTRiZWY5ZTI0YmNmNzYxMWY5ZDBlIiwidXNlcl9pZCI6IjEifQ.sua_URTRjNBbuqRZzw5usXQ7sVn8-LgPgh10R68gQ5U",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc2NjA4MjYzLCJpYXQiOjE3NzY2MDc5NjMsImp0aSI6IjFkNmY5ZDU1OWE1YjRmYmZiODk2NmIwMWIxMzVkMDYxIiwidXNlcl9pZCI6IjEifQ.ZLGjINF5i_yInTX5_yzwyxG8Bzw_HYMLyfL9Sc1YbvU",
               "type": "string"
             }
           ]
@@ -276,7 +276,7 @@
           }
         },
         "url": {
-          "raw": "http://127.0.0.1:8000/api/services/1/",
+          "raw": "http://127.0.0.1:8000/api/services/2/",
           "protocol": "http",
           "host": [
             "127",
@@ -288,7 +288,7 @@
           "path": [
             "api",
             "services",
-            "1",
+            "2",
             ""
           ]
         }
@@ -298,6 +298,16 @@
     {
       "name": "9. Get Orders",
       "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc2NjEyOTMyLCJpYXQiOjE3NzY2MTI2MzIsImp0aSI6IjhhOTZjMDEyYzFjNDQyYjg5MDEyZmFhM2ZlYjcxMDkxIiwidXNlcl9pZCI6IjEifQ.ecE7w-ZeuM70npgP36FrUyuWp9oB572b_2WF5hKLxII",
+              "type": "string"
+            }
+          ]
+        },
         "method": "GET",
         "header": [],
         "url": {
@@ -332,7 +342,7 @@
           "raw": "{\r\n    \"service_id\": 1,\r\n    \"message\": \"Привет! Хочу заказать твою помощь по лабам.\"\r\n} "
         },
         "url": {
-          "raw": "http://127.0.0.1:8000/api/orders/3",
+          "raw": "http://127.0.0.1:8000/api/orders/1",
           "protocol": "http",
           "host": [
             "127",
@@ -344,7 +354,7 @@
           "path": [
             "api",
             "orders",
-            "3"
+            "1"
           ]
         }
       },
@@ -357,7 +367,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\r\n    \"service\": 3,\r\n    \"message\": \"Ой, я передумал, отмените заказ\"\r\n}",
+          "raw": "{\r\n    \"service\": 3,\r\n    \"status\": \"accepted\"\r\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -390,7 +400,7 @@
         "method": "DELETE",
         "header": [],
         "url": {
-          "raw": "http://127.0.0.1:8000/api/orders/5/",
+          "raw": "http://127.0.0.1:8000/api/orders/2/",
           "protocol": "http",
           "host": [
             "127",
@@ -402,7 +412,7 @@
           "path": [
             "api",
             "orders",
-            "5",
+            "2",
             ""
           ]
         }
@@ -416,7 +426,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\r\n    \"username\": \"arman_kz\",\r\n    \"first_name\": \"Арман\",\r\n    \"last_name\": \"Оспанов\",\r\n    \"email\": \"arman@kbtu.kz\",\r\n    \"password\": \"superpassword123\"\r\n}",
+          "raw": "{\r\n    \"username\": \"admin\",\r\n    \"first_name\": \"Khan\",\r\n    \"last_name\": \"Maksim\",\r\n    \"password\": \"admin123\"\r\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -452,7 +462,7 @@
         "header": [
           {
             "key": "Authorization",
-            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc2NTg1NzkxLCJpYXQiOjE3NzY1ODU0OTEsImp0aSI6ImRhNzljNGM5YWMzZjRlNTlhNTY0NWZjNmQxMTRmYmM4IiwidXNlcl9pZCI6IjEifQ.wwp7Qblpw6y6iEBuhXqp3k-cbtsK8twdMkyNvrId4uA",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc2NjA4MjYzLCJpYXQiOjE3NzY2MDc5NjMsImp0aSI6IjFkNmY5ZDU1OWE1YjRmYmZiODk2NmIwMWIxMzVkMDYxIiwidXNlcl9pZCI6IjEifQ.ZLGjINF5i_yInTX5_yzwyxG8Bzw_HYMLyfL9Sc1YbvU",
             "type": "text"
           }
         ],
@@ -684,6 +694,134 @@
               "key": "service",
               "value": "3"
             }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "21. Test1",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc2NjM4MjU1LCJpYXQiOjE3NzY2Mzc5NTUsImp0aSI6IjM5NjdkNmU2OTg1MTRiZGE5NzVmYjcwNzFiYmNjMzk3IiwidXNlcl9pZCI6IjkifQ.kNfbBCrJbzRTbyg3ESdonS7Eyq6n5_T-5y8Uu9Zgsu0",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"score\": 5,\r\n    \"text\": \"Я лучший мастер на свете!\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/services/3/review/",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "services",
+            "3",
+            "review",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "22. Check Change Name etc.",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc2Njk1MjY5LCJpYXQiOjE3NzY2OTQ5NjksImp0aSI6ImEzZmRlMTAyMDBiOTQ2MTE5NTc5MGUwNmVhNmMxNDk4IiwidXNlcl9pZCI6IjkifQ.jEohcy003jwV13M8BWImqqPLDKrPCpoVkJmdDzL5bL4",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PATCH",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"first_name\": \"new_first_name\",\r\n    \"last_name\": \"new_last_name\",\r\n    \"email\": \"new@gmail.com\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/profile/",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "profile",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "23. Test Change Password",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc2Njk1NDY3LCJpYXQiOjE3NzY2OTUxNjcsImp0aSI6IjhlMDg2OWZkZmY4YjRmMjU5MjA2NWZkMjM5ZDVhMTk4IiwidXNlcl9pZCI6IjkifQ.LC6kNg52YtSJeLkrcRoFcuLX80D9EfpuBK-G2K1m_0I",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PUT",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"old_password\": \"password123\",\r\n    \"new_password\": \"password1234\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/profile/change-password/",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "profile",
+            "change-password",
+            ""
           ]
         }
       },

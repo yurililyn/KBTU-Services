@@ -6,8 +6,9 @@ from django_filters.rest_framework import DjangoFilterBackend
 from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.models import User
+from rest_framework.parsers import MultiPartParser, FormParser
 
-from .models import Category, ServicePost, Order, Review
+from .models import Category, ServicePost, Order, Review, Profile
 from .serializers import (
     RegisterSerializer, 
     UserProfileSerializer, 
@@ -173,3 +174,19 @@ class ChangePasswordView(generics.UpdateAPIView):
             )
 
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class AvatarUploadView(APIView):
+    permission_classes = [IsAuthenticated]
+    parser_classes = (MultiPartParser, FormParser) # Важно для файлов
+
+    def post(self, request):
+        user = request.user
+        # Получаем или создаем профиль
+        profile, created = Profile.objects.get_or_create(user=user)
+        
+        if 'avatar' in request.data:
+            profile.avatar = request.data['avatar']
+            profile.save()
+            return Response({"avatar_url": profile.avatar.url}, status=200)
+        
+        return Response({"error": "Файл не найден"}, status=400)
