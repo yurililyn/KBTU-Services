@@ -4,6 +4,7 @@ from . import views
 urlpatterns = [
     path('register/', views.RegisterView.as_view(), name='api_register'),
     path('profile/', views.UserProfileView.as_view(), name='api_profile'),
+    path('profile/avatar/', views.AvatarUploadView.as_view(), name='avatar_upload'),
     path('profile/change-password/', views.ChangePasswordView.as_view(), name='change_password'),
     path('orders/', views.OrderListCreateView.as_view(), name='api_orders_list'),
     path('orders/<int:pk>/', views.OrderDetailView.as_view(), name='api_order_detail'),
