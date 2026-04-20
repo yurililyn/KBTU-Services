@@ -4,5 +4,5 @@ export interface Review{
     username: String,
     score: number,
     text: String,
-    created_at: String
+    created_at: string
 }

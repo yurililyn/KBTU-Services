@@ -100,10 +100,10 @@ export class AuthService {
     return this.http.patch<User>(`${this.apiUrl}/profile/`, { username });
   }
 
-    getProfileById(){
-      
-    }
-    clearProfile(){
-      this.profileSubject.next(null);
-    }
+  getProfileById(id : number) : Observable<User>{
+    return this.http.get<User>(`${this.apiUrl}/profile/${id}`)
+  }
+  clearProfile(){
+    this.profileSubject.next(null);
+  }
 }

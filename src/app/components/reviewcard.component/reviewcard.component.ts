@@ -1,16 +1,22 @@
-import { Component } from '@angular/core';
-import { input } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { Review } from '../../models/review.model';
-import { CommonModule, DatePipe } from '@angular/common';
-import { NgClass, NgIf } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+
 @Component({
   selector: 'app-reviewcard',
-  imports: [FormsModule, CommonModule],
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './reviewcard.component.html',
-  styleUrl: './reviewcard.component.css',
+  styleUrl: './reviewcard.component.css'
 })
 export class ReviewcardComponent {
-    review = input.required<Review>();
+  review = input.required<Review>();
+  avatar = input<string | null>(null);
 
+  getInitial(): string {
+    return this.review().username?.charAt(0).toUpperCase() || '?';
+  }
+  getDate(dateStr: string): Date {
+    return new Date(dateStr);
+  }
 }

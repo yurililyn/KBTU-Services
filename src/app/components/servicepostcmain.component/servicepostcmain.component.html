@@ -14,14 +14,19 @@
 
       <div class="author-bar">
         <div class="author-info">
-          <div class="avatar-circle">{{ service()?.author_username?.charAt(0) }}</div>
-          <span class="username">{{ service()?.author_username }}</span>
-        </div>
-        <div class="rating-badge">
-          <span class="star">★</span>
-          <span class="score">{{ service()?.average_rating }}</span>
-          <span class="count">({{ service()?.total_votes }} reviews)</span>
-        </div>
+            <ng-container *ngIf="authorAvatar(); else authorInitial">
+              <img class="avatar-circle avatar-img" [src]="authorAvatar()!" alt="avatar" />
+            </ng-container>
+            <ng-template #authorInitial>
+              <div class="avatar-circle">{{ getInitial(service()?.author_username) }}</div>
+            </ng-template>
+            <span class="username">{{ service()?.author_username }}</span>
+          </div>
+          <div class="rating-badge">
+            <span class="star">★</span>
+            <span class="score">{{ service()?.average_rating }}</span>
+            <span class="count">({{ service()?.total_votes }} reviews)</span>
+          </div>
       </div>
 
       <section class="description-section">
@@ -37,7 +42,7 @@
         </div>
 
         <div class="reviews-list" *ngIf="reviews.length > 0; else noReviews">
-          <app-reviewcard *ngFor="let review of reviews" [review] = "review"></app-reviewcard>
+          <app-reviewcard *ngFor="let review of reviews" [review] = "review" [avatar]="reviewAvatars().get(review.user) ?? null"></app-reviewcard>
         </div>
 
         <ng-template #noReviews>
@@ -55,7 +60,7 @@
       
 
         <button class="primary-btn" (click)="openOrder()">Order Service</button>
-        <button class="secondary-btn">Contact Seller</button>
+        <button class="secondary-btn" (click)="openContacts()">Contact Seller</button>
         
       </div>
     </div>
@@ -102,3 +107,72 @@
     <p>Loading service details...</p>
   </div>
 </ng-template>
+
+
+
+
+
+
+<div class="popup-overlay" *ngIf="showContactsPopup()" (click)="closeContacts()">
+  <div class="popup-box contacts-popup" (click)="$event.stopPropagation()">
+    
+    <div class="popup-header">
+      <div class="contacts-author-info">
+          <ng-container *ngIf="authorAvatar(); else contactsInitial">
+            <img class="contacts-avatar avatar-img-round" [src]="authorAvatar()!" alt="avatar" />
+          </ng-container>
+          <ng-template #contactsInitial>
+            <div class="contacts-avatar">{{ getInitial(service()?.author_username) }}</div>
+          </ng-template>
+          <div>
+            <h2>{{ service()?.author_username }}</h2>
+            <p class="contacts-subtitle">Service provider</p>
+          </div>
+      </div>
+      <button class="close-x" (click)="closeContacts()">×</button>
+    </div>
+
+    <div class="popup-body contacts-body">
+
+      <div class="contact-item" [class.disabled]="!service()?.author_telegram" (click)="openTelegram()">
+        <div class="contact-icon tg-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248-1.97 9.289c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L8.32 14.617l-2.96-.924c-.643-.204-.657-.643.136-.953l11.57-4.461c.537-.194 1.006.131.496.969z"/>
+          </svg>
+        </div>
+        <div class="contact-details">
+          <span class="contact-label">Telegram</span>
+          <span class="contact-value">{{ service()?.author_telegram || 'Not specified' }}</span>
+        </div>
+        <span class="contact-arrow" *ngIf="service()?.author_telegram">→</span>
+      </div>
+
+      <div class="contact-item" [class.disabled]="!service()?.author_email" (click)="openEmail()">
+        <div class="contact-icon email-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4-8 5-8-5V6l8 5 8-5v2z"/>
+          </svg>
+        </div>
+        <div class="contact-details">
+          <span class="contact-label">Email</span>
+          <span class="contact-value">{{ service()?.author_email || 'Not specified' }}</span>
+        </div>
+        <span class="contact-arrow" *ngIf="service()?.author_email">→</span>
+      </div>
+
+      <div class="contact-item" [class.disabled]="!service()?.author_phone" (click)="openPhone()">
+        <div class="contact-icon phone-icon">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+          </svg>
+        </div>
+        <div class="contact-details">
+          <span class="contact-label">Phone</span>
+          <span class="contact-value">{{ service()?.author_phone || 'Not specified' }}</span>
+        </div>
+        <span class="contact-arrow" *ngIf="service()?.author_phone">→</span>
+      </div>
+
+    </div>
+  </div>
+</div>

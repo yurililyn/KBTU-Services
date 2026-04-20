@@ -1,15 +1,21 @@
 <div class="review-card">
-            <div class="review-top">
-              <div class="user-meta">
-                <div class="user-initials">{{ review().username.charAt(0) }}</div>
-                <div class="user-details">
-                  <span class="name">{{ review().username }}</span>
-                  <span class="date">{{ review().created_at  }}</span>
-                </div>
-              </div>
-              <div class="user-score">
-                <span class="star">★</span> {{ review().score }}
-              </div>
-            </div>
-        <p class="review-content">{{ review().text }}</p>
+  <div class="review-header">
+    <ng-container *ngIf="avatar(); else reviewInitial">
+      <img class="review-avatar" [src]="avatar()!" alt="avatar" />
+    </ng-container>
+    <ng-template #reviewInitial>
+      <div class="review-avatar review-avatar-initials">{{ getInitial() }}</div>
+    </ng-template>
+
+    <div class="review-meta">
+      <span class="review-username">{{ review().username }}</span>
+      <span class="review-date">{{ getDate(review().created_at) | date:'dd MMM yyyy' }}</span>
+    </div>
+
+    <div class="review-stars">
+      <span *ngFor="let s of [1,2,3,4,5]" [class.filled]="s <= review().score">★</span>
+    </div>
+  </div>
+
+  <p class="review-text" *ngIf="review().text">{{ review().text }}</p>
 </div>

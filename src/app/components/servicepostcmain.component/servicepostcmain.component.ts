@@ -29,6 +29,9 @@ export class ServicePostMainComponent implements OnInit {
   orderMessage = signal('');
   isSubmitting = signal(false);
   reviews : Review[] = [];
+  showContactsPopup = signal(false);
+  authorAvatar = signal<string | null>(null);
+  reviewAvatars = signal<Map<number, string | null>>(new Map());
   constructor(
     private route: ActivatedRoute,
     private serviceService: ServicepostService,
@@ -43,20 +46,40 @@ export class ServicePostMainComponent implements OnInit {
   }
 
   ngOnInit() {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    
-    if (id) {
-      this.serviceService.getById(id).subscribe(data => {
-        this.service.set(data);
-        this.isLoading.set(false);
+  const id = Number(this.route.snapshot.paramMap.get('id'));
+  
+  if (id) {
+    this.serviceService.getById(id).subscribe(data => {
+      this.service.set(data);
+      this.isLoading.set(false);
+
+      // Загружаем аватар автора
+      this.auth.getProfileById(data.author).subscribe(profile => {
+        this.authorAvatar.set(profile.avatar || null);
         this.cdr.detectChanges();
       });
 
-      // 2. Загружаем все отзывы для этого сервиса
-      this.reviewService.getByServiceId(id).subscribe(reviewsData => {
-        this.reviews = reviewsData;
+      this.cdr.detectChanges();
+    });
+
+    this.reviewService.getByServiceId(id).subscribe(reviewsData => {
+      this.reviews = reviewsData;
+
+      // Загружаем аватары для каждого ревью
+      const map = new Map<number, string | null>();
+      let loaded = 0;
+      reviewsData.forEach(review => {
+        this.auth.getProfileById(review.user).subscribe(profile => {
+          map.set(review.user, profile.avatar || null);
+          loaded++;
+          if (loaded === reviewsData.length) {
+            this.reviewAvatars.set(new Map(map));
+            this.cdr.detectChanges();
+          }
+        });
       });
-    }
+    });
+  }
   }
 
   openOrder() {
@@ -92,8 +115,35 @@ export class ServicePostMainComponent implements OnInit {
   }
 
 
-
   getBack(){
     this.location.back();
+  }
+  openContacts() {
+  this.showContactsPopup.set(true);
+}
+
+  closeContacts() {
+    this.showContactsPopup.set(false);
+  }
+
+  openTelegram() {
+    const telegram = this.service()?.author_telegram;
+    if (!telegram) return;
+    window.open(`https://t.me/${telegram.replace('@', '').trim()}`, '_blank');
+  }
+
+  openEmail() {
+    const email = this.service()?.author_email;
+    if (!email) return;
+    window.open(`mailto:${email}`, '_blank');
+  }
+
+  openPhone() {
+    const phone = this.service()?.author_phone;
+    if (!phone) return;
+    window.open(`tel:${phone}`, '_blank');
+  }
+  getInitial(username: string): string {
+    return username?.charAt(0).toUpperCase() || '?';
   }
 }
