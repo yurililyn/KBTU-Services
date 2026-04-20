@@ -1,0 +1,102 @@
+<div class="detail-container">
+  <div class="content-wrapper"*ngIf="!isLoading(); else loader">
+    
+    <div class="main-content">
+      <nav class="breadcrumb">
+        <span>Services</span>
+        <span class="sep">/</span>
+        <span class="active">{{ service()?.category_name }}</span>
+      </nav>
+
+      <h1 class="service-title">{{ service()?.title }}</h1>
+
+      <div class="author-bar">
+        <div class="author-info">
+          <div class="avatar-circle">{{ service()?.author_username?.charAt(0) }}</div>
+          <span class="username">{{ service()?.author_username }}</span>
+        </div>
+        <div class="rating-badge">
+          <span class="star">★</span>
+          <span class="score">{{ service()?.average_rating }}</span>
+          <span class="count">({{ service()?.total_votes }} reviews)</span>
+        </div>
+      </div>
+
+      <section class="description-section">
+        <h2>About this service</h2>
+        <p class="description-text">{{ service()?.description }}</p>
+      </section>
+
+      <div class="divider"></div>
+
+      <section class="reviews-section">
+        <div class="reviews-header">
+          <h2>Reviews <span class="badge">{{ reviews.length }}</span></h2>
+        </div>
+
+        <div class="reviews-list" *ngIf="reviews.length > 0; else noReviews">
+          <app-reviewcard *ngFor="let review of reviews" [review] = "review"></app-reviewcard>
+        </div>
+
+        <ng-template #noReviews>
+          <div class="empty-state">No reviews yet for this service.</div>
+        </ng-template>
+      </section>
+    </div>
+
+    <div class="sidebar">
+      <div class="sticky-card">
+        <div class="price-box">
+          <span class="label">Total Price</span>
+          <span class="value">{{ service()?.price }}$</span>
+        </div>
+      
+
+        <button class="primary-btn" (click)="openOrder()">Order Service</button>
+        <button class="secondary-btn">Contact Seller</button>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="popup-overlay" *ngIf="showOrderPopup()" (click)="closeOrder()">
+  <div class="popup-box" (click)="$event.stopPropagation()">
+    <div class="popup-header">
+      <h2>📦 Create Order</h2>
+      <button class="close-x" (click)="closeOrder()">×</button>
+    </div>
+    
+    <div class="popup-body">
+      <div class="order-summary">
+        <span>Service: <strong>{{ service()?.title }}</strong></span>
+        <span class="order-price">{{ service()?.price }}$</span>
+      </div>
+
+      <div class="input-group">
+        <label>Requirements</label>
+        <textarea 
+          [(ngModel)]="orderMessage" 
+          rows="5" 
+          placeholder="Hi! I need help with..."
+          [disabled]="isSubmitting()"
+        ></textarea>
+        <p class="hint">Be as specific as possible to get the best result.</p>
+      </div>
+    </div>
+
+    <div class="popup-footer">
+      <button class="cancel-btn" (click)="closeOrder()" [disabled]="isSubmitting()">Cancel</button>
+      <button class="confirm-btn" (click)="submitOrder()" [disabled]="isSubmitting() || !orderMessage().trim()">
+        {{ isSubmitting() ? 'Sending...' : 'Confirm & Send' }}
+      </button>
+    </div>
+  </div>
+</div>
+
+<ng-template #loader>
+  <div class="loading-screen">
+    <div class="spinner"></div>
+    <p>Loading service details...</p>
+  </div>
+</ng-template>

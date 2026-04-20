@@ -52,9 +52,12 @@ export class SearchComponent implements OnInit {
     this.selectedOrdering = ordering;
     this.load();
   }
-  onCategoryChange(categoryId: string) {
-    this.selectedCategory = categoryId ? +categoryId : null;
-    this.load();
+  onCategoryChange(value: any) {
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: { category: this.selectedCategory || null },
+      queryParamsHandling: 'merge' // Сохраняем поисковый запрос (searchQuery)
+    });
   }
   onSearch() {
     this.router.navigate(['/search'], {
@@ -63,5 +66,11 @@ export class SearchComponent implements OnInit {
         category: this.selectedCategory
       }
     });
+  }
+
+
+
+  goToService(id :number){
+    this.router.navigate(["/service" , id])
   }
 }

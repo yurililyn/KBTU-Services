@@ -49,4 +49,9 @@ export class MainComponent {
   onViewAll() {
     this.router.navigate(['/search/']);
   }
+
+
+  goToService(id :number){
+    this.router.navigate(["/service" , id])
+  }
 }

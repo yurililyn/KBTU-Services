@@ -6,6 +6,7 @@ import { authGuard } from './auth-guard';
 import { profileGuard } from './profile-guard';
 import { ProfileComponent } from './components/profile.component/profile.component';
 import { SearchComponent } from './components/search/search.component';
+import { ServicePostMainComponent } from './components/servicepostcmain.component/servicepostcmain.component';
 export const routes: Routes = [
     {
         path: "",
@@ -35,6 +36,11 @@ export const routes: Routes = [
     {
         path: "search",
         component: SearchComponent,
+        canActivate: [authGuard]
+    },
+    {
+        path: "service/:id",
+        component: ServicePostMainComponent,
         canActivate: [authGuard]
     },
     {

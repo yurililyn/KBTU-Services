@@ -1,0 +1,33 @@
+.review-card {
+  padding: 24px 0;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.review-top {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.user-meta { display: flex; gap: 12px; }
+.user-initials {
+  width: 38px; height: 38px;
+  background: #f8fafc;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  border: 1px solid #e2e8f0;
+}
+
+.user-details { display: flex; flex-direction: column; }
+.name { font-weight: 600; font-size: 14px; }
+.date { font-size: 12px; color: #94a3b8; }
+
+.user-score { font-weight: 700; color: #1e293b; }
+
+.review-content {
+  color: #475569;
+  line-height: 1.6;
+}

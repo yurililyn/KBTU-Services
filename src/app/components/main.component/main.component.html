@@ -34,7 +34,7 @@
 
     <div class="grid">
         <div *ngFor="let service of services$ | async">
-            <div class="card">
+            <div class="card" (click)="goToService(service.id)">
                 <div class="card-content">
                     <div class="badge math">{{service.category_name}}</div>
                     <h3>{{service.title}}</h3>

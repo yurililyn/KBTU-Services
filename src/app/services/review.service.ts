@@ -11,4 +11,8 @@ export class ReviewService {
   submitReview(serviceId: number, data: { score: number, text: string }): Observable<Review>{
     return this.http.post<Review>(`${this.apiUrl}/services/${serviceId}/review/`, data);
   }
+
+  getByServiceId(serviceId : number) : Observable<Review[]>{
+    return this.http.get<Review[]>(`${this.apiUrl}/services/${serviceId}/review/`);
+  }
 }

@@ -22,10 +22,12 @@
     <option value="created_at">Oldest first</option>
     <option value="-created_at">Newest first</option>
   </select>
-  <select (change)="onCategoryChange($any($event.target).value)">
-    <option value="">All categories</option>
-    <option *ngFor="let cat of categories" [value]="cat.id">{{ cat.name }}</option>
-  </select>
+  <select [(ngModel)]="selectedCategory" (change)="onCategoryChange($any($event.target).value)">
+    <option [ngValue]="null">All categories</option>
+    <option *ngFor="let cat of categories" [ngValue]="cat.id">
+      {{ cat.name }}
+  </option>
+</select>
 </div>
 
   <div class="loading" *ngIf="isLoading">
@@ -38,8 +40,8 @@
   </div>
   
   <div class="grid" *ngIf="!isLoading && services.length > 0">
-    <div class="card" *ngFor="let service of services">
-      <div class="card-content">
+    <div class="card" *ngFor="let service of services" >
+      <div class="card-content" (click)="goToService(service.id)">
         <div class="badge">{{ service.category_name }}</div>
         <h3>{{ service.title }}</h3>
         <p class="description">{{ service.description }}</p>

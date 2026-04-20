@@ -1,0 +1,15 @@
+<div class="review-card">
+            <div class="review-top">
+              <div class="user-meta">
+                <div class="user-initials">{{ review().username.charAt(0) }}</div>
+                <div class="user-details">
+                  <span class="name">{{ review().username }}</span>
+                  <span class="date">{{ review().created_at  }}</span>
+                </div>
+              </div>
+              <div class="user-score">
+                <span class="star">★</span> {{ review().score }}
+              </div>
+            </div>
+        <p class="review-content">{{ review().text }}</p>
+</div>

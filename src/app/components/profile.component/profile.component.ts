@@ -65,9 +65,12 @@ export class ProfileComponent implements OnInit {
 
 
   getAverageRating(): number {
-    if (this.services.length === 0) return 0;
-    const total = this.services.reduce((sum, s) => sum + s.average_rating, 0);
-    return +(total / this.services.length).toFixed(1);
+    const ratedServices = this.services.filter(s => s.total_votes > 0);
+
+    if (ratedServices.length === 0) return 0;
+
+    const total = ratedServices.reduce((sum, s) => sum + s.average_rating, 0);
+    return +(total / ratedServices.length).toFixed(1);
   }
   setTab(tab: string) {
     this.activeTab = tab;
