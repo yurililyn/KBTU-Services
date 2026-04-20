@@ -7,38 +7,38 @@
   <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
     <!-- поле user -->
     <div class="form-field">
-      <label for="username">Имя пользователя</label>
+      <label for="username">Username</label>
       <input
         id="username"
         type="text"
         formControlName="username"
-        placeholder="Введите логин"
+        placeholder="Enter login"
         autocomplete="username"
         [class.invalid]="username.invalid && (username.dirty || username.touched)"
       />
       <!-- сообщение валидации появляется сверху поля -->
       <div *ngIf="username.invalid && (username.dirty || username.touched)" class="validation-error">
-        <ng-container *ngIf="username.errors?.['required']">Поле обязательно для заполнения</ng-container>
-        <ng-container *ngIf="username.errors?.['minlength']">Минимум 3 символа</ng-container>
-        <ng-container *ngIf="username.errors?.['pattern']">Только латиница, цифры и _</ng-container>
+        <ng-container *ngIf="username.errors?.['required']">Is required</ng-container>
+        <ng-container *ngIf="username.errors?.['minlength']">At least 3 symbols</ng-container>
+        <ng-container *ngIf="username.errors?.['pattern']">Only latin alphabet, nums and _</ng-container>
       </div>
     </div>
 
     <!-- поле password -->
     <div class="form-field">
-      <label for="password">Пароль</label>
+      <label for="password">Password</label>
       <input
         id="password"
         type="password"
         formControlName="password"
-        placeholder="Введите пароль"
+        placeholder="Enter the password"
         autocomplete="current-password"
         [class.invalid]="password.invalid && (password.dirty || password.touched)"
       />
       <div *ngIf="password.invalid && (password.dirty || password.touched)" class="validation-error">
-        <ng-container *ngIf="password.errors?.['required']">Пароль обязателен</ng-container>
-        <ng-container *ngIf="password.errors?.['minlength']">Не менее 6 символов</ng-container>
-        <ng-container *ngIf="password.errors?.['pattern']">Пароль должен содержать буквы и цифры</ng-container>
+        <ng-container *ngIf="password.errors?.['required']">Is required</ng-container>
+        <ng-container *ngIf="password.errors?.['minlength']">At least 6 symbols</ng-container>
+        <ng-container *ngIf="password.errors?.['pattern']">Should contain alphabet and nums</ng-container>
       </div>
     </div>
 
@@ -49,12 +49,12 @@
       [disabled]="loginForm.invalid || isLoading"
       [class.loading]="isLoading"
     >
-      <span *ngIf="!isLoading">Войти</span>
+      <span *ngIf="!isLoading">Login</span>
       <span *ngIf="isLoading" class="spinner"></span>
     </button>
   </form>
   <div class="register-link">
-      <span>Нет аккаунта?</span>
-      <a routerLink="/registration">Зарегистрироваться</a>
+      <span>Don't have account?</span>
+      <a routerLink="/registration">Register</a>
   </div>
 </div>

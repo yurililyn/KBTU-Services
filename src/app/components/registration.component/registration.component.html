@@ -1,15 +1,15 @@
 <!-- плашка ошибки регистрации (самый верх формы) -->
 <div *ngIf="authError" class="auth-error-banner" @fadeIn>
   <span class="banner-icon"></span>
-  <span>'Пользователь с таким именем пользователя уже существует'</span>
-  <button type="button" class="banner-close" (click)="authError = false" aria-label="Закрыть">×</button>
+  <span>'User with this name is already exist'</span>
+  <button type="button" class="banner-close" (click)="authError = false" aria-label="Close">×</button>
 </div>
 
 <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-form">
 
   <!-- 1. Username -->
   <div class="form-field">
-    <label for="username">Имя пользователя</label>
+    <label for="username">Username</label>
     <input
       id="username"
       type="text"
@@ -19,45 +19,45 @@
       [class.invalid]="username.invalid && (username.dirty || username.touched)"
     />
     <div *ngIf="username.invalid && (username.dirty || username.touched)" class="validation-error">
-      <ng-container *ngIf="username.errors?.['required']">Имя пользователя обязательно</ng-container>
-      <ng-container *ngIf="username.errors?.['minlength']">Минимум 3 символа</ng-container>
-      <ng-container *ngIf="username.errors?.['pattern']">Только латиница, цифры и _</ng-container>
-      <ng-container *ngIf="username.errors?.['usernameTaken']">Имя пользователя уже занято</ng-container>
+      <ng-container *ngIf="username.errors?.['required']">Is required</ng-container>
+      <ng-container *ngIf="username.errors?.['minlength']">At least 3 symbols</ng-container>
+      <ng-container *ngIf="username.errors?.['pattern']">Only latin alphabet, nums and  _</ng-container>
+      <ng-container *ngIf="username.errors?.['usernameTaken']">This username is already placed</ng-container>
     </div>
   </div>
 
   <!-- 2. Пароль -->
   <div class="form-field">
-    <label for="password">Пароль</label>
+    <label for="password">Password</label>
     <input
       id="password"
       type="password"
       formControlName="password"
-      placeholder="••••••••"
+      placeholder="Password"
       autocomplete="new-password"
       [class.invalid]="password.invalid && (password.dirty || password.touched)"
     />
     <div *ngIf="password.invalid && (password.dirty || password.touched)" class="validation-error">
-      <ng-container *ngIf="password.errors?.['required']">Пароль обязателен</ng-container>
-      <ng-container *ngIf="password.errors?.['minlength']">Минимум 8 символов</ng-container>
-      <ng-container *ngIf="password.errors?.['pattern']">Минимум 1 заглавная, 1 строчная и 1 цифра</ng-container>
+      <ng-container *ngIf="password.errors?.['required']">is required</ng-container>
+      <ng-container *ngIf="password.errors?.['minlength']">At least 8 symbols</ng-container>
+      <ng-container *ngIf="password.errors?.['pattern']">At least 1 capital, 1 lowercase letter and 1 num</ng-container>
     </div>
   </div>
 
   <!-- 3. Подтверждение пароля -->
   <div class="form-field">
-    <label for="confirmPassword">Подтверждение пароля</label>
+    <label for="confirmPassword">Confirm Passoword</label>
     <input
       id="confirmPassword"
       type="password"
       formControlName="confirmPassword"
-      placeholder="••••••••"
+      placeholder="confirmPassword"
       autocomplete="new-password"
       [class.invalid]="confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched)"
     />
     <div *ngIf="confirmPassword.invalid && (confirmPassword.dirty || confirmPassword.touched)" class="validation-error">
-      <ng-container *ngIf="confirmPassword.errors?.['required']">Подтвердите пароль</ng-container>
-      <ng-container *ngIf="confirmPassword.errors?.['passwordMismatch']">Пароли не совпадают</ng-container>
+      <ng-container *ngIf="confirmPassword.errors?.['required']">Confirm Password</ng-container>
+      <ng-container *ngIf="confirmPassword.errors?.['passwordMismatch']">The passwords are not matched</ng-container>
     </div>
   </div>
 
@@ -66,11 +66,11 @@
               (password.touched || confirmPassword.touched) &&
               !confirmPassword.errors?.['required']"
        class="form-wide-error">
-    Пароли не совпадают
+    Passwords are not matched
   </div>
 
   <div class="form-field">
-    <label for="email">Email <span class="optional-badge">необязательно</span></label>
+    <label for="email">Email <span class="optional-badge">not required</span></label>
     <input
       id="email"
       type="email"
@@ -80,43 +80,43 @@
       [class.invalid]="email.invalid && (email.dirty || email.touched)"
     />
     <div *ngIf="email.invalid && (email.dirty || email.touched)" class="validation-error">
-      <ng-container *ngIf="email.errors?.['email']">Некорректный email адрес</ng-container>
-      <ng-container *ngIf="email.errors?.['emailTaken']">Email уже используется</ng-container>
+      <ng-container *ngIf="email.errors?.['email']">Invalid email</ng-container>
+      <ng-container *ngIf="email.errors?.['emailTaken']">Email is already exist</ng-container>
     </div>
   </div>
   <!-- 4. Имя и Фамилия в одной строке -->
   <div class="form-row">
     <div class="form-field half">
-      <label for="firstName">Имя</label>
+      <label for="firstName">Name</label>
       <input
         id="firstName"
         type="text"
         formControlName="firstName"
-        placeholder="Иван"
+        placeholder="Alex"
         autocomplete="given-name"
         [class.invalid]="firstName.invalid && (firstName.dirty || firstName.touched)"
       />
       <div *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)" class="validation-error">
-        <ng-container *ngIf="firstName.errors?.['required']">Имя обязательно</ng-container>
-        <ng-container *ngIf="firstName.errors?.['minlength']">Минимум 2 символа</ng-container>
-        <ng-container *ngIf="firstName.errors?.['pattern']">Только буквы и дефис</ng-container>
+        <ng-container *ngIf="firstName.errors?.['required']">Is required</ng-container>
+        <ng-container *ngIf="firstName.errors?.['minlength']">At least 2 symbols</ng-container>
+        <ng-container *ngIf="firstName.errors?.['pattern']">Only letters and -</ng-container>
       </div>
     </div>
 
     <div class="form-field half">
-      <label for="lastName">Фамилия</label>
+      <label for="lastName">Surname</label>
       <input
         id="lastName"
         type="text"
         formControlName="lastName"
-        placeholder="Иванов"
+        placeholder="Alex"
         autocomplete="family-name"
         [class.invalid]="lastName.invalid && (lastName.dirty || lastName.touched)"
       />
       <div *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)" class="validation-error">
-        <ng-container *ngIf="lastName.errors?.['required']">Фамилия обязательна</ng-container>
-        <ng-container *ngIf="lastName.errors?.['minlength']">Минимум 2 символа</ng-container>
-        <ng-container *ngIf="lastName.errors?.['pattern']">Только буквы и дефис</ng-container>
+        <ng-container *ngIf="lastName.errors?.['required']">Is required</ng-container>
+        <ng-container *ngIf="lastName.errors?.['minlength']">At least 2 symbols</ng-container>
+        <ng-container *ngIf="lastName.errors?.['pattern']">Only letters and -</ng-container>
       </div>
     </div>
   </div>
@@ -128,11 +128,11 @@
     [disabled]="registerForm.invalid || isLoading"
     [class.loading]="isLoading"
   >
-    <span *ngIf="!isLoading">Зарегистрироваться</span>
+    <span *ngIf="!isLoading">Register</span>
     <span *ngIf="isLoading" class="spinner"></span>
   </button>
 </form>
 <div class="register-link">
-    <span>Уже есть аккаунт?</span>
-    <a routerLink="/login">Войти</a>
+    <span>Already have account?</span>
+    <a routerLink="/login">Login</a>
 </div>
