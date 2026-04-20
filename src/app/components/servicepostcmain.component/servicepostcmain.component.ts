@@ -1,5 +1,5 @@
-import { Component, OnInit, signal } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, signal, input } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ServicepostService } from '../../services/servicepost.service';
 import { HttpClient } from '@angular/common/http'; // Для отправки заказа (или создай OrderService)
 import { CommonModule } from '@angular/common';
@@ -9,6 +9,7 @@ import { ChangeDetectorRef } from '@angular/core';
 import { ReviewService } from '../../services/review.service';
 import { Review } from '../../models/review.model';
 import { ReviewcardComponent } from "../reviewcard.component/reviewcard.component";
+import { Location } from '@angular/common';
 @Component({
   selector: 'app-service-detail',
   standalone: true,
@@ -25,6 +26,7 @@ export class ServicePostMainComponent implements OnInit {
   orderMessage = signal('');
   isSubmitting = signal(false);
   reviews : Review[] = [];
+  fromMain = input<boolean>(false);
   constructor(
     private route: ActivatedRoute,
     private serviceService: ServicepostService,
@@ -32,6 +34,8 @@ export class ServicePostMainComponent implements OnInit {
     private http: HttpClient ,
     private ordService: OrderService,
     private cdr : ChangeDetectorRef,
+    private location : Location,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -81,5 +85,11 @@ export class ServicePostMainComponent implements OnInit {
         alert('Error creating order');
       }
     });
+  }
+
+
+
+  getBack(){
+    this.location.back();
   }
 }

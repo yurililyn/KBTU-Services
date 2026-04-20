@@ -3,7 +3,9 @@
     
     <div class="main-content">
       <nav class="breadcrumb">
-        <span>Services</span>
+        <span (click)="getBack()" style="cursor: pointer;">
+          Back
+        </span>
         <span class="sep">/</span>
         <span class="active">{{ service()?.category_name }}</span>
       </nav>
