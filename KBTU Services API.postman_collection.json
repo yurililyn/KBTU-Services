@@ -14,7 +14,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\r\n    \"username\": \"buyer\",\r\n    \"password\": \"password123\"\r\n}",
+          "raw": "{\r\n    \"username\": \"buyer\",\r\n    \"password\": \"password1234\"\r\n}",
           "options": {
             "raw": {
               "language": "json"
@@ -821,6 +821,101 @@
             "api",
             "profile",
             "change-password",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "24. Send Review",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc2Njk1OTY4LCJpYXQiOjE3NzY2OTU2NjgsImp0aSI6ImI5ZjllMGIxOGEyOTQ1OWM4ZWYwNTNiODE3ZGFhMTJmIiwidXNlcl9pZCI6IjkifQ.cF59yIwc7tkbpav-6fdBHvPB9iHoC1gibIAh356GfCg",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"score\": 5,\r\n    \"text\": \"Отличная работа, спасибо!\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/services/3/review/",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "services",
+            "3",
+            "review",
+            ""
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "25. Check Profile Update",
+      "request": {
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc2NzA2NTg0LCJpYXQiOjE3NzY3MDYyODQsImp0aSI6ImVhZTg2MzhjOTVhOTRjYzdiNjM0ZjkzNTE1NzRmMzRiIiwidXNlcl9pZCI6IjkifQ.kkJ10aEjxNIU2Gxjya5TWhMsbMTil3b98BxPjEBWf1A",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Authorization",
+            "value": "Bearer ",
+            "type": "text",
+            "disabled": true
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"phone\": \"+7 777 123 4567\",\r\n    \"telegram\": \"@buyer_pro\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://127.0.0.1:8000/api/profile/",
+          "protocol": "http",
+          "host": [
+            "127",
+            "0",
+            "0",
+            "1"
+          ],
+          "port": "8000",
+          "path": [
+            "api",
+            "profile",
             ""
           ]
         }
