@@ -17,4 +17,7 @@ export class FooterComponent {
   openInstagram(){
     window.open("https://www.instagram.com/konyuktor/");
   }
+  openEmail(){
+    window.open(`mailto:a_guchshin@kbtu.kz`, '_blank');
+  }
 }
