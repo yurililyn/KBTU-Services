@@ -40,7 +40,7 @@ class OrderSerializer(serializers.ModelSerializer):
             'id', 'customer', 'customer_username', 'service', 
             'service_title', 'service_author_id', 'message', 
             'status', 'created_at', 
-            'user_role' # 2. И СЮДА ЕГО НУЖНО БЫЛО ДОБАВИТЬ
+            'user_role'
         ]
         read_only_fields = ['customer', 'created_at']
 
@@ -67,7 +67,6 @@ class UserProfileSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         profile_data = validated_data.pop('profile', {})
 
-        # Добавь username сюда
         instance.username = validated_data.get('username', instance.username)
         instance.first_name = validated_data.get('first_name', instance.first_name)
         instance.last_name = validated_data.get('last_name', instance.last_name)

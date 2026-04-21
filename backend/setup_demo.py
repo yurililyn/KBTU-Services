@@ -37,7 +37,7 @@ def run():
         if created:
             user.set_password('123123123') 
             user.first_name = data['first']
-            user.email = data['email'] # <-- ДОБАВЛЕНО СОХРАНЕНИЕ ПОЧТЫ
+            user.email = data['email']
             user.save()
             
             profile, _ = Profile.objects.get_or_create(user=user)
@@ -46,7 +46,6 @@ def run():
             profile.save()
             print(f"👤 Account {data['user']} is ready")
             
-        # Сохраняем объект пользователя, чтобы привязать к нему услуги
         users[data['user']] = user
 
     # 3. Создаем массовку (Услуги)
