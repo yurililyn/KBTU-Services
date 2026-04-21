@@ -4,7 +4,7 @@
     <h3>{{ service().title }}</h3>
     <p class="description">{{ service().description }}</p>
     <div class="bottom">
-      <span class="price">{{ service().price }}$</span>
+      <span class="price">{{ service().price }}₸</span>
       <div class="actions">
         <div class="rating-container" title="Средний рейтинг (кол-во отзывов)">
           <span class="star-icon">★</span>
@@ -36,7 +36,7 @@
         <textarea [(ngModel)]="editData.description" rows="4" placeholder="Description"></textarea>
       </div>
       <div class="form-group">
-        <label>Price ($)</label>
+        <label>Price (₸)</label>
         <input type="number" [(ngModel)]="editData.price" placeholder="Price" />
       </div>
     </div>
