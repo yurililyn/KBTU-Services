@@ -20,4 +20,7 @@ export class FooterComponent {
   openEmail(){
     window.open(`mailto:a_guchshin@kbtu.kz`, '_blank');
   }
+  openPhone() {
+    window.open(`tel:87777777777`, '_blank');
+  }
 }
