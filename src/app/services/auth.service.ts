@@ -75,7 +75,8 @@ export class AuthService {
         first_name: data.first_name,
         last_name: data.last_name,
         phone: data.phone,
-        telegram: data.telegram
+        telegram: data.telegram,
+        email: data.email
       });
     }
 

@@ -44,7 +44,8 @@ export class ProfileComponent implements OnInit {
   settingsData = { 
     first_name: '', last_name: '', phone: '', telegram: '',
     username: '',
-    old_password: '', new_password: '', confirm_password: ''
+    old_password: '', new_password: '', confirm_password: '',
+    email : ''
   };
   isSavingSettings = false;
   selectedAvatarFile: File | null = null;
@@ -233,6 +234,7 @@ export class ProfileComponent implements OnInit {
       phone: profile.phone || '',
       telegram: profile.telegram || '',
       username: profile.username || '',
+      email : profile.email || '',
       old_password: '', new_password: '', confirm_password: ''
     };
     this.usernameStatus = 'idle';
@@ -276,7 +278,8 @@ export class ProfileComponent implements OnInit {
       last_name: this.settingsData.last_name,
       phone: this.settingsData.phone,
       telegram: this.settingsData.telegram,
-      username: this.settingsData.username
+      username: this.settingsData.username,
+      email: this.settingsData.email
     });
 
     const uploadAvatar$ = this.selectedAvatarFile

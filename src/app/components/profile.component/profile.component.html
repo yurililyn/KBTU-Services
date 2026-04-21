@@ -189,6 +189,10 @@
         <input class="popup-input" type="text" [(ngModel)]="settingsData.telegram" placeholder="@username" />
       </div>
       <div class="form-group">
+        <label>Email</label>
+        <input class="popup-input" type="text" [(ngModel)]="settingsData.email" placeholder="abcds@efg.hi" />
+      </div>
+      <div class="form-group">
         <label>Avatar</label>
         <input type="file" accept="image/*" class="popup-input" 
               (change)="onAvatarSelected($event)" />
